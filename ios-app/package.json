@@ -1,0 +1,16 @@
+{
+  "name": "literature-card-game",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Literature Card Game for iPhone, built with Capacitor from the web game in www/.",
+  "scripts": {
+    "sync": "cap sync ios"
+  },
+  "dependencies": {
+    "@capacitor/core": "8.5.2",
+    "@capacitor/ios": "8.5.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.5.2"
+  }
+}

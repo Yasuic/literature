@@ -1,0 +1,10 @@
+{
+  "appId": "io.github.yasuic.literature",
+  "appName": "Literature",
+  "webDir": "www",
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#04060d",
+    "scrollEnabled": true
+  }
+}
