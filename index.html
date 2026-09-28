@@ -33,8 +33,8 @@
     --suit-red: #e6234f;
     --red-glow: #ff8fae;
     --danger: #ff7d9f;
-    --display: "Orbitron", "Exo 2", "Segoe UI", system-ui, sans-serif;
-    --body: "Exo 2", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --display: "Montserrat", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --body: var(--display);
     --cw: 58px;
   }
   /* Font choices. Paid bank typefaces are used when the device has them installed; otherwise a close free lookalike. */
@@ -440,7 +440,6 @@
           <option value="ms">Morgan Stanley (Trade Gothic)</option>
           <option value="jpm">J.P. Morgan (Amplitude)</option>
           <option value="gs">Goldman Sachs (Goldman Sans)</option>
-          <option value="default">Futuristic (Orbitron)</option>
         </select>
       </div>
       <div class="field">
@@ -595,6 +594,8 @@
   if (!(settings.prefs >= 2)) Object.assign(settings, { prefs: 2, players: '4', coach: true, bluffing: 'on', speed: 'xslow' });
   // ARC Group (Montserrat) became the default font; switch saved settings over once.
   if (settings.prefs < 3) Object.assign(settings, { prefs: 3, font: 'arc' });
+  // Coach became on by default and the Futuristic font was removed; switch saved settings over once.
+  if (settings.prefs < 4) Object.assign(settings, { prefs: 4, coach: true, font: settings.font === 'default' ? 'arc' : settings.font });
   // Anything unexpected in stored settings falls back to the default.
   const pick = (v, ok, d) => (ok.includes(v) ? v : d);
   settings.level = pick(settings.level, ['casual', 'sharp', 'expert'], 'sharp');
@@ -804,7 +805,7 @@
   // coach.verdicts: how each of your moves compared with the best one the Coach found.
   let coach = { analysis: null, verdicts: [], showHint: false };
   function coachTick() {
-    if (!settings.coach || !st || st.over || !myTurn() || ui.give) return;
+    if (!st || st.over || !myTurn() || ui.give) return;   // runs even with the Coach hidden, so turning it on later shows every move
     if (coach.analysis && coach.analysis.seq === st.seq) return;
     const a = { seq: st.seq, result: null };
     coach.analysis = a;
@@ -819,13 +820,13 @@
   }
   // Called just before you move: compares your move with the Coach's best in a focused head-to-head search.
   function coachJudge(move) {
-    if (!settings.coach || !st || st.over) return;
+    if (!st || st.over) return;
     const pre = JSON.parse(JSON.stringify(st));
     const a = coach.analysis && coach.analysis.seq === st.seq ? coach.analysis : null;
     const text = moveText(move, 0);
     const v = { text, status: 'thinking' };
     coach.verdicts.unshift(v);
-    coach.verdicts.length = Math.min(coach.verdicts.length, 30);
+    coach.verdicts.length = Math.min(coach.verdicts.length, 300);
     (a ? a.promise : Promise.resolve(null)).then(r => {
       // You moved before the Coach finished looking at the position: search every candidate now, with your move
       // as the one to beat, instead of rating your move against nothing.
@@ -856,6 +857,7 @@
       }
       try { v.why = whyText(pre, v.rating === 'best' ? move : best, v.rating === 'best' ? null : move); } catch (e) { v.why = ''; }
       v.status = 'done';
+      saveGame();
       render();
     }).catch(() => { v.status = 'failed'; render(); });
   }
@@ -1805,7 +1807,7 @@
     try {
       const prev = localStorage.getItem(GAME_KEY);
       if (prev) localStorage.setItem(GAME_KEY + '-prev', prev);
-      localStorage.setItem(GAME_KEY, JSON.stringify({ st, ui }));
+      localStorage.setItem(GAME_KEY, JSON.stringify({ st, ui, coachLog: coach.verdicts.filter(v => v.status === 'done') }));
     } catch (e) {}
   }
   function loadGame() {
@@ -1870,8 +1872,8 @@
 
   $('level').value = settings.level;
   $('speed').value = settings.speed;
-  const applyFont = () => { if (settings.font === 'default') delete document.documentElement.dataset.font; else document.documentElement.dataset.font = settings.font; };
-  settings.font = ['default', 'ms', 'jpm', 'gs', 'arc'].includes(settings.font) ? settings.font : 'arc';
+  const applyFont = () => { document.documentElement.dataset.font = settings.font; };
+  settings.font = ['ms', 'jpm', 'gs', 'arc'].includes(settings.font) ? settings.font : 'arc';
   $('font').value = settings.font;
   applyFont();
   $('font').addEventListener('change', e => { settings.font = e.target.value; saveSettings(); applyFont(); });
@@ -1979,6 +1981,7 @@
       setMode(st.players.length);
       buildTable();
       ui = Object.assign({ tab: 'ask', card: null, callBook: null, error: null, shownSeq: 0, give: null, assign: {} }, data.ui || {});
+      coach = { analysis: null, verdicts: Array.isArray(data.coachLog) ? data.coachLog : [], showHint: false };
       if (!['ask', 'call', 'notes'].includes(ui.tab)) ui.tab = 'ask';
       if (!ui.assign || typeof ui.assign !== 'object') ui.assign = {};
       // A pending hand-over only survives if it still makes sense.
@@ -1987,12 +1990,46 @@
     }
     else newGame();
   }
-  try { window.claude?.hot?.snapshot?.(() => ({ st, ui })); } catch (e) {}
+  try { window.claude?.hot?.snapshot?.(() => ({ st, ui, coachLog: coach.verdicts.filter(v => v.status === 'done') })); } catch (e) {}
   if (window.claude?.hot?.ready) window.claude.hot.ready(start);
   else start(window.claude?.hot?.data ?? {});
 })();
 </script>
+
+
+<div id="installBar" hidden style="position:fixed;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 12px);z-index:20;background:var(--felt);border:1px solid var(--brass);border-radius:14px;padding:12px 14px;box-shadow:0 10px 30px rgba(0,0,0,.6);display:flex;gap:12px;align-items:center;font-size:.92rem;line-height:1.4">
+  <div id="installText" style="flex:1"></div>
+  <button class="btn primary" id="installGo" hidden>Install</button>
+  <button class="btn" id="installClose" aria-label="Close">Close</button>
+</div>
 <script>
-if ('serviceWorker' in navigator) addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+(function () {
+  const standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  if ('serviceWorker' in navigator) addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+  if (standalone) return;
+  let closed = false; try { closed = localStorage.getItem('installClosed') === '1'; } catch (e) {}
+  if (closed) return;
+  const bar = document.getElementById('installBar'), text = document.getElementById('installText'), go = document.getElementById('installGo');
+  const ua = navigator.userAgent;
+  const ios = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const inApp = /FBAN|FBAV|Instagram|Line\/|Snapchat|GSA\/|Claude/i.test(ua);
+  const safari = ios && /Safari\//.test(ua) && !/CriOS|FxiOS|EdgiOS|OPiOS/.test(ua) && !inApp;
+  if (ios) {
+    text.innerHTML = safari
+      ? '<b>Install this game:</b> tap the Share button <span aria-hidden="true">(the square with an arrow pointing up)</span>, scroll down, then tap <b>Add to Home Screen</b>.'
+      : (inApp ? '<b>To install:</b> this page is open inside another app. Open it in <b>Safari</b> first (tap the menu, then "Open in Safari"), then tap Share and <b>Add to Home Screen</b>.'
+               : '<b>To install:</b> tap the Share button in the address bar, then <b>Add to Home Screen</b>. If you do not see it, open this page in <b>Safari</b>.');
+    bar.hidden = false;
+  }
+  let promptEvent = null;
+  addEventListener('beforeinstallprompt', e => {
+    e.preventDefault(); promptEvent = e;
+    text.innerHTML = '<b>Install this game</b> to play it from your home screen, even offline.';
+    go.hidden = false; bar.hidden = false;
+  });
+  go.addEventListener('click', async () => { if (!promptEvent) return; promptEvent.prompt(); await promptEvent.userChoice.catch(() => null); promptEvent = null; bar.hidden = true; });
+  addEventListener('appinstalled', () => { bar.hidden = true; });
+  document.getElementById('installClose').addEventListener('click', () => { bar.hidden = true; try { localStorage.setItem('installClosed', '1'); } catch (e) {} });
+})();
 </script>
 </body></html>

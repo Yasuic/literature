@@ -1,6 +1,6 @@
 // Offline cache. The game runs from this cache, and fetches fresh files in the background when online,
 // so a new version shows up the next time the app opens. Change VERSION on every release.
-const VERSION = 'literature-v2';
+const VERSION = 'literature-v3';
 const FILES = [
   './', 'index.html', 'engine.js', 'search-worker.js', 'manifest.webmanifest', 'privacy.html', 'favicon.ico',
   'fonts/fonts.css',
