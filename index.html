@@ -1,0 +1,1998 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Literature</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#04060d">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Literature">
+<link rel="icon" href="favicon.ico">
+<style>
+  /* One deliberate look: a card table on a night flight deck. Cool blue-black ground, cyan light, cold white cards. */
+  :root {
+    color-scheme: dark;
+    --ground: #04060d;
+    --felt: #0a1124;
+    --felt-edge: #050814;
+    --raised: #111a33;
+    --line: #22335a;
+    --text: #e4efff;
+    --muted: #8a9cc4;
+    --brass: #38e2ff;
+    --brass-soft: rgba(56, 226, 255, .16);
+    --brass-ink: #031218;
+    --us: #4df2b4;
+    --us-soft: rgba(77, 242, 180, .16);
+    --them: #ff5c8f;
+    --them-soft: rgba(255, 92, 143, .16);
+    --paper: #f1f6ff;
+    --paper-dim: #c5d2ec;
+    --ink: #0a1228;
+    --suit-red: #e6234f;
+    --red-glow: #ff8fae;
+    --danger: #ff7d9f;
+    --display: "Orbitron", "Exo 2", "Segoe UI", system-ui, sans-serif;
+    --body: "Exo 2", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --cw: 58px;
+  }
+  /* Font choices. Paid bank typefaces are used when the device has them installed; otherwise a close free lookalike. */
+  :root[data-font="ms"] { --display: "Trade Gothic", "Trade Gothic LT Std", "Trade Gothic Next", "Archivo", system-ui, sans-serif; --body: var(--display); }
+  :root[data-font="jpm"] { --display: "Amplitude", "Barlow", system-ui, sans-serif; --body: var(--display); }
+  :root[data-font="gs"] { --display: "Goldman Sans", "GS Sans", "Inter", system-ui, sans-serif; --body: var(--display); }
+  :root[data-font="arc"] { --display: "Montserrat", system-ui, sans-serif; --body: var(--display); }
+  [hidden] { display: none !important; }
+  html, body { background: var(--ground); color: var(--text); }
+  body { font-family: var(--body); font-size: 15px; line-height: 1.45; }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+
+  .app { max-width: 1320px; margin: 0 auto; padding-inline: 16px; padding-block: 18px 40px; }
+
+  .top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 14px 24px; margin-bottom: 18px; }
+  .brand h1 { font-family: var(--display); font-weight: 700; font-size: 1.9rem; line-height: 1; margin: 0; letter-spacing: .12em; text-transform: uppercase; color: var(--brass); text-shadow: 0 0 18px rgba(56,226,255,.45); }
+  .brand p { margin: 6px 0 0; color: var(--muted); font-size: .88rem; }
+  .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .field { display: flex; flex-direction: column; gap: 3px; }
+  .field label { font-size: .68rem; text-transform: uppercase; letter-spacing: .09em; color: var(--muted); }
+  select, .btn {
+    background: var(--raised); border: 1px solid var(--line); border-radius: 8px;
+    padding: 7px 12px; font-size: .9rem; color: var(--text); cursor: pointer;
+  }
+  .btn:hover:not(:disabled) { border-color: var(--brass); }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+  .btn.primary { background: var(--brass); color: var(--brass-ink); border-color: var(--brass); font-weight: 700; box-shadow: 0 0 14px rgba(56,226,255,.3); }
+  .btn.primary:hover:not(:disabled) { background: #7dedff; }
+  .btn.toggle[aria-pressed="true"] { background: var(--brass-soft); border-color: var(--brass); color: var(--brass); }
+
+  .layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(250px, 320px); gap: 16px; align-items: start; }
+  .table-wrap { container-type: inline-size; min-width: 0; }
+
+  /* ---------- Table ---------- */
+  .table {
+    display: grid; gap: 14px;
+    grid-template-columns: minmax(0, 170px) minmax(0, 1fr) minmax(0, 170px);
+    grid-template-areas: ". s2 ." "s1 center s3" "you you you";
+    background: linear-gradient(rgba(56,226,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(56,226,255,.045) 1px, transparent 1px), radial-gradient(ellipse at 50% 38%, #142452 0%, var(--felt) 55%, var(--felt-edge) 100%);
+    background-size: 28px 28px, 28px 28px, auto;
+    border: 1px solid var(--line); border-radius: 22px; padding: 18px;
+    box-shadow: inset 0 0 60px rgba(0,0,0,.55), 0 0 0 1px rgba(56,226,255,.08);
+  }
+  .seat {
+    border: 1px solid transparent; border-radius: 14px; padding: 10px 12px;
+    display: flex; flex-direction: column; gap: 8px; align-items: center; text-align: center;
+    background: rgba(4, 6, 13, .4); transition: border-color .2s, box-shadow .2s;
+  }
+  .table.p6 { grid-template-areas: "s2 s3 s4" "s1 center s5" "you you you"; }
+  .seat.s1 { grid-area: s1; align-self: center; }
+  .seat.s2 { grid-area: s2; }
+  .seat.s3 { grid-area: s3; }
+  .seat.s4 { grid-area: s4; }
+  .seat.s5 { grid-area: s5; align-self: center; }
+  .table.p4 .seat.s3 { align-self: center; }
+  .seat { min-width: 0; }
+  .fan { overflow: hidden; }
+  .seat.active { border-color: var(--brass); box-shadow: 0 0 0 3px var(--brass-soft), 0 0 30px rgba(56,226,255,.22); }
+  .seat.target { cursor: pointer; border-color: var(--them); border-style: dashed; }
+  .seat.target:hover { background: var(--them-soft); }
+  .seat.out { opacity: .5; }
+  .seat-name { font-family: var(--display); font-weight: 600; font-size: .98rem; line-height: 1.15; letter-spacing: .02em; overflow-wrap: anywhere; }
+  .chip {
+    display: inline-block; font-size: .66rem; font-weight: 600; text-transform: uppercase; letter-spacing: .09em;
+    padding: 2px 7px; border-radius: 999px;
+  }
+  .chip.us { background: var(--us-soft); color: var(--us); }
+  .chip.them { background: var(--them-soft); color: var(--them); }
+  .chip.out { background: rgba(138,156,196,.18); color: var(--muted); }
+  .seat-meta { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; justify-content: center; font-size: .82rem; color: var(--muted); }
+  .fan { display: flex; justify-content: center; height: 42px; padding-left: 21px; max-width: 100%; }
+  .fan .back { width: 28px; height: 40px; margin-left: -21px; border-radius: 4px; flex: none; }
+  .asked { font-size: .75rem; color: var(--muted); line-height: 1.35; }
+  .asked b { color: var(--text); font-weight: 500; }
+
+  .back {
+    background:
+      repeating-linear-gradient(45deg, rgba(56,226,255,.18) 0 2px, transparent 2px 7px),
+      repeating-linear-gradient(-45deg, rgba(56,226,255,.18) 0 2px, transparent 2px 7px),
+      #0d1a3f;
+    border: 2px solid #cfe3ff; box-shadow: 0 1px 2px rgba(0,0,0,.4);
+  }
+
+  .center {
+    grid-area: center; display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; gap: 10px; min-height: 170px; padding: 12px;
+  }
+  .turn-label { font-size: .7rem; text-transform: uppercase; letter-spacing: .14em; color: var(--brass); font-weight: 600; }
+  .turn-name { font-family: var(--display); font-weight: 600; font-size: 1.5rem; line-height: 1.15; text-wrap: balance; }
+  .event { max-width: 34ch; color: var(--text); font-size: 1rem; text-wrap: balance; }
+  .event.fresh { animation: rise .35s ease-out; }
+  .event .note { display: block; color: var(--muted); font-size: .85rem; margin-top: 3px; }
+  @keyframes rise { from { opacity: .2; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .cref { font-weight: 700; white-space: nowrap; }
+  .cref.red { color: var(--red-glow); }
+
+  /* ---------- You ---------- */
+  .you { grid-area: you; border-top: 1px solid var(--line); padding-top: 14px; display: flex; flex-direction: column; gap: 14px; }
+  .you-head { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; }
+  .you-head .seat-name { font-size: .95rem; }
+  .you.active .you-head .seat-name { color: var(--brass); }
+  .hand { display: flex; flex-wrap: wrap; gap: 12px 18px; }
+  .group { display: flex; flex-direction: column; gap: 4px; }
+  .group-label { font-size: .68rem; text-transform: uppercase; letter-spacing: .09em; color: var(--muted); }
+  .group-cards { display: flex; padding-left: 22px; }
+  .group-cards .card { margin-left: -22px; }
+
+  .card {
+    width: var(--cw); height: calc(var(--cw) * 1.4); flex: none;
+    background: var(--paper); color: var(--ink); border-radius: 7px; position: relative;
+    box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 2px 6px rgba(0,0,0,.45);
+    font-family: var(--display); border: 1px solid var(--paper-dim);
+  }
+  .card.red { color: var(--suit-red); }
+  .card .r { position: absolute; top: 5px; left: 6px; font-size: .92rem; font-weight: 600; line-height: 1; }
+  .card .s { position: absolute; top: 21px; left: 7px; font-size: .8rem; line-height: 1; font-family: var(--body); }
+  .card .big { position: absolute; right: 7px; bottom: 5px; font-size: 1.55rem; line-height: 1; font-family: var(--body); }
+  .card.joker .r { font-size: .72rem; letter-spacing: .04em; top: 6px; }
+  .card.joker .s { top: 20px; }
+
+  .panel { background: rgba(4, 6, 13, .5); border: 1px solid var(--line); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 12px; }
+  .tabs { display: flex; gap: 6px; }
+  .tab { background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 5px 14px; font-size: .85rem; cursor: pointer; }
+  .tab[aria-selected="true"] { background: var(--brass); color: var(--brass-ink); border-color: var(--brass); font-weight: 600; }
+  .tab:disabled { opacity: .45; cursor: not-allowed; }
+  .hint { color: var(--muted); font-size: .88rem; margin: 0; }
+  .error { color: var(--danger); font-size: .88rem; margin: 0; }
+
+  .picker { display: flex; flex-direction: column; gap: 8px; }
+  .pick-row { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 10px; align-items: center; }
+  .pick-row .group-label { text-align: right; }
+  .pick-cards { display: flex; flex-wrap: wrap; gap: 6px; }
+  .mini {
+    width: 42px; height: 52px; border-radius: 6px; cursor: pointer; position: relative;
+    background: var(--paper); color: var(--ink); border: 2px solid transparent;
+    font-family: var(--display); font-weight: 600; font-size: .82rem; line-height: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 2px; padding: 0;
+  }
+  .mini.red { color: var(--suit-red); }
+  .mini small { font-size: .62rem; font-family: var(--body); font-weight: 600; letter-spacing: .04em; }
+  .mini.held { background: transparent; color: var(--paper-dim); border: 2px dashed var(--line); }
+  .mini.held.red { color: var(--red-glow); }
+  .mini.selected { border-color: var(--brass); box-shadow: 0 0 0 3px var(--brass-soft); transform: translateY(-3px); }
+  .mini:disabled { cursor: not-allowed; opacity: .5; }
+  .ask-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .ask-bar .what { font-size: .9rem; margin-right: 4px; }
+  .picker + .ask-bar, .pop .ask-bar { flex-direction: column; align-items: stretch; }
+  .ask-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .ask-row .btn { flex: 0 1 auto; white-space: nowrap; }
+  .ask-row .btn.ask-l { margin-right: auto; text-align: left; }
+  .ask-row .btn.ask-r { margin-left: auto; text-align: right; }
+  .ask-row .btn.ask-f { margin-inline: auto; }
+  .ask-row .btn { max-width: 46%; overflow-wrap: anywhere; }
+  .ask-row:has(.ask-f) .btn { max-width: 31%; }
+  .pop .ask-row .btn { flex: 0 1 44%; white-space: normal; min-width: 0; padding-inline: 8px; }
+  .pop .ask-row:has(.ask-f) .btn { flex-basis: 31%; }
+  @media (max-width: 699px), (hover: none) {
+    .ask-row .btn { flex: 0 1 44%; white-space: normal; min-width: 0; padding-inline: 8px; }
+    .ask-row:has(.ask-f) .btn { flex-basis: 31%; }
+    .ask-row:has(.ask-f) .ask-w { display: none; }
+  }
+
+  .call-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 6px; }
+  .call-grid .btn { text-align: left; }
+  .call-grid .btn[aria-pressed="true"] { border-color: var(--brass); background: var(--brass-soft); }
+  .confirm { border: 1px solid var(--them); background: var(--them-soft); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+  .confirm p { margin: 0; font-size: .9rem; }
+  .name-rows { display: flex; flex-direction: column; gap: 6px; }
+  .name-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  .name-row .cref { min-width: 72px; }
+  .name-row .btn { padding: 4px 10px; font-size: .84rem; }
+  .name-row .btn[aria-pressed="true"] { border-color: var(--brass); background: var(--brass-soft); color: var(--brass); }
+  .coach { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; display: flex; flex-direction: column; gap: 6px; font-size: .88rem; background: rgba(4,6,13,.4); }
+  .coach .btn { padding: 4px 10px; font-size: .84rem; }
+  .why { margin-top: 4px; padding: 6px 8px; border-left: 2px solid var(--brass); background: var(--brass-soft); border-radius: 0 6px 6px 0; font-size: .84rem; line-height: 1.4; }
+  .why b { color: var(--brass); font-weight: 600; }
+  .rate { display: inline-block; font-size: .66rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 1px 7px; border-radius: 999px; margin-right: 4px; background: rgba(138,156,196,.18); color: var(--muted); }
+  .rate.r-best, .rate.r-close { background: var(--us-soft); color: var(--us); }
+  .rate.r-ok { background: var(--brass-soft); color: var(--brass); }
+  .rate.r-mistake { background: var(--them-soft); color: var(--them); }
+  .coach-list { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 7px; font-size: .84rem; max-height: 260px; overflow-y: auto; }
+  .fly-layer { position: fixed; inset: 0; pointer-events: none; z-index: 8; }
+  .fly { position: fixed; transform: translate(-50%, -50%); will-change: transform; }
+  .fly .card { --cw: 52px; box-shadow: 0 8px 22px rgba(0,0,0,.55); }
+  .fly.req { display: flex; align-items: center; gap: 6px; background: var(--felt); border: 2px solid var(--brass); border-radius: 12px; padding: 6px 10px; box-shadow: 0 8px 22px rgba(0,0,0,.55); font-family: var(--display); }
+  .fly.req .fc { background: var(--paper); color: var(--ink); border-radius: 5px; padding: 3px 6px; font-size: .95rem; font-weight: 600; line-height: 1; display: flex; flex-direction: column; align-items: center; }
+  .fly.req .fc.red { color: var(--suit-red); }
+  .fly.req .fc small { font-size: .75rem; }
+  .fly.req .q { color: var(--brass); font-size: 1.4rem; }
+  .fly.req.nope { border-color: var(--them); }
+  .fly.req .x { color: var(--them); font-size: 1.3rem; font-weight: 700; }
+  .fly.hit .card { box-shadow: 0 0 0 3px var(--us), 0 8px 22px rgba(0,0,0,.55); }
+  .fly.badge { font-weight: 700; font-size: 1rem; padding: 4px 12px; border-radius: 999px; }
+  .fly.badge.good { background: var(--us); color: #03211a; }
+  .fly.badge.bad { background: var(--them); color: #2b0618; }
+  .seat.being-asked, .you.being-asked { box-shadow: 0 0 0 3px var(--them-soft), 0 0 26px rgba(255,92,143,.4); border-color: var(--them); }
+  .group.has-pop { position: relative; cursor: pointer; }
+  .group-label.as-btn { background: none; border: 0; padding: 0; text-align: left; cursor: pointer; font: inherit; font-size: .68rem; text-transform: uppercase; letter-spacing: .09em; color: var(--muted); }
+  .group.has-pop:hover .group-label.as-btn, .group.open .group-label.as-btn { color: var(--brass); }
+  .group .pop { display: none; position: absolute; top: calc(100% + 6px); left: 0; z-index: 7; flex-direction: column; gap: 8px;
+    background: var(--felt); border: 1px solid var(--brass); border-radius: 12px; padding: 10px; box-shadow: 0 10px 28px rgba(0,0,0,.55);
+    width: max-content; min-width: min(420px, calc(100vw - 32px)); max-width: min(calc(100vw - 32px), 460px); cursor: default; }
+  .group .pop::before { content: ""; position: absolute; left: 0; right: 0; top: -10px; height: 10px; }
+  .group.open .pop { display: flex; }
+  @media (hover: hover) { .group.has-pop:hover .pop, .group.has-pop:focus-within .pop { display: flex; } }
+  .pop-head { display: none; justify-content: space-between; align-items: center; gap: 8px; font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; color: var(--brass); }
+  .pop-head .btn { text-transform: none; letter-spacing: 0; padding: 3px 10px; font-size: .84rem; }
+  @media (max-width: 699px), (hover: none) {
+    .group .pop { position: fixed; left: 12px; right: 12px; top: auto; bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+      width: auto; max-width: none; z-index: 9; box-shadow: 0 -6px 30px rgba(0,0,0,.6); }
+    .group .pop .pick-cards { flex-wrap: wrap; justify-content: center; }
+    .group .pop .ask-bar { align-items: stretch; }
+    .pop-head { display: flex; }
+  }
+  .group .pop .pick-cards { flex-wrap: nowrap; }
+  .group .pop .mini { width: 40px; height: 50px; }
+  .group .pop .ask-bar { font-size: .86rem; }
+  .group.callable { border-radius: 10px; box-shadow: 0 0 0 2px var(--brass), 0 0 18px rgba(56,226,255,.35); padding: 4px 6px 6px; position: relative; }
+  .group.callable .group-label { color: var(--brass); }
+  .call-set { margin-top: 6px; padding: 4px 10px; font-size: .82rem; opacity: 0; transition: opacity .15s; }
+  .group.callable:hover .call-set, .group.callable:focus-within .call-set { opacity: 1; }
+  @media (hover: none) { .call-set { opacity: 1; } }
+  .names-box { margin: -6px 0 16px; }
+  .names-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; margin-bottom: 10px; }
+  .names-grid input { width: 100%; box-sizing: border-box; background: var(--raised); border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; color: var(--text); font: inherit; }
+  .names-grid input:focus { border-color: var(--brass); outline: none; }
+  .pending { margin: -8px 0 14px; color: var(--brass); font-size: .85rem; }
+
+  /* Table talk sits above the board: a short strip, newest line first, scrolls for older lines. */
+  .talk-top { margin-bottom: 12px; padding: 10px 14px; }
+  .talk-top h2 { margin-bottom: 6px; }
+  .talk-top .log { max-height: 88px !important; }
+
+  /* ---------- Sidebar ---------- */
+  .side { display: flex; flex-direction: column; gap: 16px; }
+  @media (min-width: 700px) {
+    .side { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px); max-height: calc(100vh - 24px); overflow-y: auto; }
+    .log { max-height: 240px; }
+  }
+  .box { background: var(--felt); border: 1px solid var(--line); border-radius: 16px; padding: 14px; box-shadow: inset 0 1px 0 rgba(56,226,255,.08); }
+  .box h2 { font-family: var(--display); font-weight: 600; font-size: .92rem; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 10px; }
+  .score { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .score .team { font-size: .8rem; color: var(--muted); }
+  .score .team.them { text-align: right; }
+  .score .num { font-family: var(--display); font-weight: 700; font-size: 2rem; line-height: 1; font-variant-numeric: tabular-nums; }
+  .score .us .num { color: var(--us); }
+  .score .them .num { color: var(--them); }
+  .score .to { font-size: .7rem; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; text-align: center; }
+
+  .shelf {
+    display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 4px; align-items: end;
+    padding: 0 4px 6px; border-bottom: 4px solid #2a3f70; box-shadow: 0 4px 14px rgba(56,226,255,.12); border-radius: 0 0 3px 3px;
+  }
+  .spine {
+    height: 118px; border-radius: 3px 3px 1px 1px; border: 1px solid var(--line); background: var(--raised);
+    display: flex; align-items: center; justify-content: center; padding: 6px 0; position: relative;
+    color: var(--muted); font-size: .72rem; font-weight: 600; letter-spacing: .05em;
+  }
+  .spine span { writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; }
+  .spine:nth-child(3n+2) { height: 108px; }
+  .spine:nth-child(3n) { height: 124px; }
+  .spine.us { background: linear-gradient(90deg, #2ecf95, var(--us) 30%, #3fe0a8); color: #03211a; border-color: #2ecf95; }
+  .spine.them { background: linear-gradient(90deg, #e0437c, var(--them) 30%, #ff4f86); color: #2b0618; border-color: #e0437c; }
+  .spine.us::after, .spine.them::after { content: ""; position: absolute; left: 3px; right: 3px; top: 10px; height: 2px; background: rgba(255,255,255,.45); }
+  .spine.pickable { cursor: pointer; border-color: var(--brass); color: var(--brass); }
+  .spine.pickable:hover, .spine.pickable[aria-pressed="true"] { background: var(--brass-soft); }
+
+  .notes { display: flex; flex-direction: column; gap: 8px; }
+  .note-row { display: grid; grid-template-columns: 78px minmax(0, 1fr); gap: 6px; align-items: center; }
+  .note-row .group-label { font-size: .64rem; }
+  .note-cells { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 3px; }
+  .cell { border-radius: 5px; background: var(--raised); text-align: center; padding: 3px 0 2px; font-size: .74rem; line-height: 1.15; }
+  .cell .c { font-weight: 700; }
+  .cell .c.red { color: var(--red-glow); }
+  .cell { min-width: 0; overflow: hidden; }
+  .cell .w { display: block; font-size: .64rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cell.us { box-shadow: inset 0 -3px 0 var(--us); }
+  .cell.them { box-shadow: inset 0 -3px 0 var(--them); }
+  .cell.us .w { color: var(--us); }
+  .cell.them .w { color: var(--them); }
+  .legend { font-size: .75rem; color: var(--muted); margin: 8px 0 0; }
+
+  .log { list-style: none; margin: 0; padding: 0; max-height: 330px; overflow-y: auto; display: flex; flex-direction: column; gap: 7px; font-size: .86rem; }
+  .log li { padding-left: 10px; border-left: 2px solid var(--line); }
+  .log li.hit { border-left-color: var(--brass); }
+  .log li.call-us { border-left-color: var(--us); }
+  .log li.call-them { border-left-color: var(--them); }
+  .log li .n { color: var(--muted); font-variant-numeric: tabular-nums; font-size: .72rem; margin-right: 6px; }
+
+  details.rules summary { cursor: pointer; font-family: var(--display); font-weight: 600; font-size: .92rem; letter-spacing: .08em; text-transform: uppercase; }
+  details.rules ul { margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size: .86rem; display: flex; flex-direction: column; gap: 5px; }
+  details.rules b { color: var(--text); font-weight: 600; }
+
+  .overlay { position: fixed; inset: 0; background: rgba(6, 8, 14, .72); display: grid; place-items: center; padding: 16px; z-index: 10; }
+  .overlay .sheet { background: var(--felt); border: 1px solid var(--brass); border-radius: 20px; padding: 28px 30px; max-width: 420px; width: 100%; text-align: center; display: flex; flex-direction: column; gap: 12px; align-items: center; }
+  .overlay h2 { font-family: var(--display); font-weight: 700; font-size: 1.6rem; margin: 0; line-height: 1.2; text-wrap: balance; }
+  .overlay p { margin: 0; color: var(--muted); }
+
+  .give { position: fixed; inset: 0; background: rgba(6, 8, 14, .72); display: grid; place-items: center; padding: 16px; z-index: 9; }
+  .give .sheet { background: var(--felt); border: 1px solid var(--them); border-radius: 20px; padding: 22px 20px; max-width: 440px; width: 100%; display: flex; flex-direction: column; gap: 14px; text-align: center; }
+  .give h2 { font-family: var(--display); font-weight: 600; font-size: 1.15rem; margin: 0; line-height: 1.3; text-wrap: balance; }
+  .give p { margin: 0; color: var(--muted); font-size: .9rem; }
+  .track { position: relative; height: 104px; border: 1px dashed var(--line); border-radius: 14px; background: rgba(4,6,13,.5); overflow: hidden; touch-action: none; }
+  .track .goal { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 64px; height: 88px; border: 2px dashed var(--them); border-radius: 8px; display: grid; place-items: center; font-size: .72rem; color: var(--them); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; padding: 4px; }
+  .track .arrow { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: var(--muted); font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; pointer-events: none; }
+  .track .card { position: absolute; left: 10px; top: 8px; cursor: grab; touch-action: none; user-select: none; --cw: 62px; }
+  .track .card.dragging { cursor: grabbing; box-shadow: 0 6px 18px rgba(0,0,0,.6); }
+  .track .card.snap { transition: transform .2s ease-out; }
+  .track .card.gone { transition: transform .22s ease-in, opacity .22s ease-in; opacity: 0; }
+
+  /* Notes stay beside the table down to 700px wide; below that they come straight after the table. */
+  .tab.narrow-only { display: none; }
+  @media (max-width: 699px) {
+    .layout { grid-template-columns: minmax(0, 1fr); }
+    /* No room beside the table, so notes move into a tab next to Ask and Call. */
+    #notesBox { display: none; }
+    .tab.narrow-only { display: inline-block; }
+  }
+  @media (max-width: 640px) {
+    .brand h1 { font-size: 1.5rem; }
+  }
+  /* Compact table whenever the table itself is narrow, whether on a phone or beside the notes. */
+  @container (max-width: 600px) {
+    .table { --cw: 46px; }
+    .table { padding: 12px; gap: 10px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "s2 s2" "s1 s3" "center center" "you you"; }
+    .table.p6 { gap: 6px; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-areas: "s2 s3 s4" "s1 . s5" "center center center" "you you you"; }
+    .table.p6 .seat { padding: 8px 4px; gap: 5px; }
+    .table.p6 .seat-name { font-size: .78rem; }
+    .table.p6 .seat-meta { font-size: .74rem; }
+    .table.p6 .fan { height: 32px; padding-left: 15px; }
+    .table.p6 .fan .back { width: 21px; height: 30px; margin-left: -15px; border-width: 1.5px; }
+    .center { min-height: 0; }
+    .turn-name { font-size: 1.2rem; }
+    .card .r { font-size: .9rem; }
+    .card .s { top: 18px; }
+    .card .big { font-size: 1.2rem; }
+    .group-cards { padding-left: 18px; }
+    .group-cards .card { margin-left: -18px; }
+    .pick-row { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+    .pick-row .group-label { text-align: left; }
+    .mini { width: 38px; height: 48px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <h1>Literature</h1>
+      <p id="blurb"></p>
+    </div>
+    <div class="controls">
+      <div class="field">
+        <label for="level">Bots</label>
+        <select id="level">
+          <option value="casual">Casual: forgets some asks</option>
+          <option value="sharp">Sharp: tracks every card</option>
+          <option value="expert">Expert: thinks ahead, bluffs when it pays</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="teammate">Teammate</label>
+        <select id="teammate" title="Smart teammates think about who gets the turn if their ask misses">
+          <option value="smart">Smart: steers the turn</option>
+          <option value="mid">Mid: plays the odds</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="players">Players</label>
+        <select id="players">
+          <option value="4">4 (teams of 2)</option>
+          <option value="6">6 (teams of 3)</option>
+        </select>
+      </div>
+      <div class="field" id="namingField">
+        <label for="naming">Calls</label>
+        <select id="naming">
+          <option value="on">Name who holds each card</option>
+          <option value="off">Team holds all six</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="strict">Rule checks</label>
+        <select id="strict">
+          <option value="on">On</option>
+          <option value="off">Off: ask in any book</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="bluffing">Bluffing</label>
+        <select id="bluffing" title="Takes effect from the next deal">
+          <option value="on">Allowed</option>
+          <option value="off">Off</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="font">Font</label>
+        <select id="font" title="Paid typefaces show when installed on this device; otherwise a close free lookalike">
+          <option value="arc">ARC Group (Montserrat)</option>
+          <option value="ms">Morgan Stanley (Trade Gothic)</option>
+          <option value="jpm">J.P. Morgan (Amplitude)</option>
+          <option value="gs">Goldman Sachs (Goldman Sans)</option>
+          <option value="default">Futuristic (Orbitron)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="speed">Bot speed</label>
+        <select id="speed">
+          <option value="xslow">Extra slow</option>
+          <option value="slow">Slow</option>
+          <option value="normal">Normal</option>
+          <option value="fast">Fast</option>
+        </select>
+      </div>
+      <button class="btn toggle" id="namesBtn" aria-pressed="false" aria-controls="namesBox">Names</button>
+      <button class="btn toggle" id="coachBtn" aria-pressed="false" title="Rate your moves against the best move the search can find">Coach</button>
+      <button class="btn toggle" id="voicesBtn" aria-pressed="true" title="Bots say their asks out loud">Voices</button>
+      <button class="btn toggle" id="soundBtn" aria-pressed="true" title="Turn sound effects on or off">Sound</button>
+      <button class="btn toggle" id="talkBtn" aria-pressed="true" title="Show or hide the log of everything said at the table">Table talk</button>
+      <button class="btn toggle" id="notesBtn" aria-pressed="false" title="Show where cards are, based on what's been said at the table">Notes</button>
+      <button class="btn primary" id="newBtn">New game</button>
+    </div>
+  </header>
+  <section class="box names-box" id="namesBox" hidden aria-label="Player names">
+    <div class="names-grid" id="namesGrid"></div>
+    <div class="ask-bar">
+      <button class="btn primary" id="namesSave">Save names</button>
+      <button class="btn" id="namesReset">Reset to default</button>
+      <span class="error" id="namesError"></span>
+    </div>
+    <p class="hint" style="margin-top:8px"><span id="namesNote"></span> Names change right away, including in a game you're playing. Letters, numbers, spaces, apostrophes, dots and hyphens only, up to 14 characters.</p>
+  </section>
+  <p class="pending" id="pending" hidden>Changed rules apply when you start a new game.</p>
+
+  <main class="layout">
+    <div class="table-wrap">
+      <section class="box talk-top" id="talkBox">
+        <h2>Table talk</h2>
+        <ol class="log" id="log"></ol>
+      </section>
+    <section class="table" id="table" aria-label="Card table">
+    </section>
+    </div>
+
+    <aside class="side">
+      <section class="box" id="coachBox" hidden>
+        <h2>Coach</h2>
+        <p class="hint" id="coachSummary"></p>
+        <ol class="coach-list" id="coachList"></ol>
+        <p class="legend">Each move is tested by playing out hundreds of imagined deals that fit what's been said at the table. Percentages are estimates.</p>
+      </section>
+      <section class="box" id="notesBox" hidden>
+        <h2>Notes</h2>
+        <div class="notes" id="notes"></div>
+        <p class="legend">Based only on your hand and what's been said at the table. “?” means three or more players could hold it; a coloured edge means they're all on one team. Hover a card for the full list.</p>
+      </section>
+      <section class="box">
+        <details class="rules">
+          <summary>How to play</summary>
+          <ul id="rulesList">
+            <li><b>Books:</b> each suit splits into a low book (2–7) and a high book (9–A). All four 8s and both jokers make a ninth book.</li>
+            <li><b>Ask</b> one opponent for one card from a book you already hold a card in. If they have it, they must hand it over and you go again. If not, it becomes their turn.</li>
+            <li><b>Bluff</b> by asking for a card you already hold. It always misses, but it can mislead the table.</li>
+            <li><b>Call</b> a book on your turn when you think you and June hold all six cards between you. If you're right, your team gets the book. If you're wrong, it goes to Basil and Otto.</li>
+            <li><b>Out:</b> a player with no cards is out, and their partner carries on alone.</li>
+            <li>The first team to <b>5 books</b> wins.</li>
+          </ul>
+        </details>
+      </section>
+      <section class="box" aria-label="Score">
+        <div class="score" id="score"></div>
+        <div class="shelf" id="shelf"></div>
+      </section>
+</aside>
+  </main>
+</div>
+
+<div class="fly-layer" id="flyLayer" aria-hidden="true"></div>
+
+<div class="give" id="give" hidden role="dialog" aria-modal="true" aria-labelledby="giveTitle">
+  <div class="sheet">
+    <h2 id="giveTitle"></h2>
+    <p id="giveText"></p>
+    <div class="track" id="track"></div>
+  </div>
+</div>
+
+<div class="overlay" id="namePrompt" hidden>
+  <form class="sheet" id="nameForm">
+    <h2>What should the table call you?</h2>
+    <p>The bots use this name when they ask you for a card.</p>
+    <input id="nameInput" maxlength="14" autocomplete="given-name" style="font: 600 1.1rem var(--body); padding: 9px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--raised); color: var(--text); text-align: center; width: 100%; box-sizing: border-box;">
+    <button class="btn primary" type="submit">Deal</button>
+  </form>
+</div>
+
+<div class="overlay" id="overlay" hidden>
+  <div class="sheet">
+    <h2 id="overTitle"></h2>
+    <p id="overText"></p>
+    <p id="overReview"></p>
+    <button class="btn primary" id="againBtn">Deal again</button>
+  </div>
+</div>
+
+<script src="engine.js"></script>
+<script>
+(function () {
+  'use strict';
+  const L = window.Lit;
+  // Seat order is clockwise from you. Seats 4 and 5 are only used in a 6 player game.
+  // Default names say where each player sits: L = left, F = front, R = right.
+  const DEFAULT_NAMES = {
+    4: ['You', 'NEGA LEFT', 'NEGA TEAMMATE', 'NEGA RIGHT'],
+    6: ['You', 'Opponent L', 'Teammate L', 'Opponent F', 'Teammate R', 'Opponent R'],
+  };
+  const SEAT_LABELS = {
+    4: ['Your name', 'Opponent on your left', 'Teammate across from you', 'Opponent on your right'],
+    6: ['Your name', 'Opponent on your left', 'Teammate on your left', 'Opponent in front of you', 'Teammate on your right', 'Opponent on your right'],
+  };
+  const namesKey = n => 'names' + n;
+  // Earlier default names count as "not chosen", so they switch to the current defaults.
+  const OLD_DEFAULTS = { 4: [[], ['Opponent L', 'Basil'], ['Teammate', 'June'], ['Opponent R', 'Otto']], 6: [] };
+  const savedNames = n => DEFAULT_NAMES[n].map((d, i) => {
+    const v = cleanName((settings[namesKey(n)] || [])[i]);
+    return v && !((OLD_DEFAULTS[n][i] || []).includes(v)) ? v : d;
+  });
+  // In sentences you are always "you"; your own name shows in team names and on your hand.
+  let NAMES, TEAM_NAME, MATES, OPPS, ME;
+  const cleanName = v => String(v == null ? '' : v).replace(/[^\p{L}\p{N} '.\-]/gu, '').replace(/\s+/g, ' ').trim().slice(0, 14);
+  const listNames = arr => arr.length === 1 ? arr[0] : arr.length === 2 ? arr.join(' & ') : arr.slice(0, -1).join(', ') + ' & ' + arr[arr.length - 1];
+  const listWords = arr => arr.length === 1 ? arr[0] : arr.length === 2 ? arr.join(' and ') : arr.slice(0, -1).join(', ') + ' and ' + arr[arr.length - 1];
+  function setMode(n) {
+    const N = savedNames(n);
+    ME = N[0];
+    NAMES = ['You'].concat(N.slice(1));
+    const mates = n === 6 ? [2, 4] : [2];
+    const opps = n === 6 ? [1, 3, 5] : [1, 3];
+    // Team names list the players once they have real names; with the positional defaults they stay short.
+    const custom = seats => seats.every(s => N[s] !== DEFAULT_NAMES[n][s]);
+    TEAM_NAME = [
+      custom(mates) ? listNames([ME].concat(mates.map(s => NAMES[s]))) : 'Your team',
+      custom(opps) ? listNames(opps.map(s => NAMES[s])) : 'Opponents',
+    ];
+    MATES = listWords(mates.map(s => NAMES[s]));
+    OPPS = listWords(opps.map(s => NAMES[s]));
+    if (st) st.players.forEach((p, s) => { p.name = NAMES[s]; });
+  }
+  const SPEED_MS = { xslow: 2600, slow: 1500, normal: 850, fast: 300 };
+  const $ = id => document.getElementById(id);
+
+  let settings = { level: 'sharp', speed: 'xslow', notes: false, bluffing: 'on', talk: true, sound: true, voices: true, coach: true, teammate: 'smart', players: '4', naming: 'on', strict: 'on', names4: null, names6: null };
+  try { Object.assign(settings, JSON.parse(localStorage.getItem('literature-settings') || '{}')); } catch (e) {}
+  // Defaults changed once (4 players, Coach on, bluffing allowed, extra slow); settings saved before that pick them up one time.
+  if (!(settings.prefs >= 2)) Object.assign(settings, { prefs: 2, players: '4', coach: true, bluffing: 'on', speed: 'xslow' });
+  // ARC Group (Montserrat) became the default font; switch saved settings over once.
+  if (settings.prefs < 3) Object.assign(settings, { prefs: 3, font: 'arc' });
+  // Anything unexpected in stored settings falls back to the default.
+  const pick = (v, ok, d) => (ok.includes(v) ? v : d);
+  settings.level = pick(settings.level, ['casual', 'sharp', 'expert'], 'sharp');
+  settings.coach = settings.coach === true;
+  settings.speed = pick(settings.speed, ['xslow', 'slow', 'normal', 'fast'], 'xslow');
+  settings.bluffing = pick(settings.bluffing, ['on', 'off'], 'on');
+  settings.players = pick(String(settings.players), ['4', '6'], '4');
+  settings.naming = pick(settings.naming, ['on', 'off'], 'on');
+  settings.strict = pick(settings.strict, ['on', 'off'], 'on');
+  settings.notes = settings.notes === true;
+  settings.talk = settings.talk !== false;
+  settings.sound = settings.sound !== false;
+  settings.voices = settings.voices !== false;
+  settings.teammate = pick(settings.teammate, ['smart', 'mid'], 'smart');
+  [4, 6].forEach(n => { if (!Array.isArray(settings[namesKey(n)])) settings[namesKey(n)] = DEFAULT_NAMES[n].slice(); });
+  delete settings.names;
+  const saveSettings = () => { try { localStorage.setItem('literature-settings', JSON.stringify(settings)); } catch (e) {} };
+
+  let st = null;
+  let ui = { tab: 'ask', card: null, callBook: null, error: null, shownSeq: 0, give: null, assign: {} };
+  let timer = null, gen = 0;
+
+  // ---------- words ----------
+  const esc = s => String(s).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
+  const subj = s => esc(NAMES[s]);
+  const obj = s => (s === 0 ? 'you' : esc(NAMES[s]));
+  const cref = c => `<span class="cref${L.isRed(c) ? ' red' : ''}">${L.cardText(c)}</span>`;
+  const isAre = s => (s === 0 ? 'are' : 'is');
+
+  function describe(ev) {
+    switch (ev.type) {
+      case 'ask':
+        return `${subj(ev.from)} asked ${obj(ev.to)} for the ${cref(ev.card)}. ` +
+          (ev.hit ? `${ev.to === 0 ? 'You' : subj(ev.to)} had it.` : `${ev.to === 0 ? "You don't" : subj(ev.to) + " doesn't"} have it.`);
+      case 'call': {
+        let s = `${subj(ev.seat)} called ${L.bookName(ev.book)}: ${ev.correct ? 'correct' : 'wrong'}. Book to ${esc(TEAM_NAME[ev.team])}.`;
+        if (!ev.correct) {
+          const cards = L.BOOK_CARDS[ev.book];
+          const i = ev.holders.findIndex(h => L.teamOf(h) !== L.teamOf(ev.seat));
+          const j = ev.assign ? ev.holders.findIndex((h, k) => h !== ev.assign[k]) : -1;
+          if (i >= 0) s += ` <span class="note">${subj(ev.holders[i])} held the ${cref(cards[i])}.</span>`;
+          else if (j >= 0) s += ` <span class="note">All six were on the team, but ${obj(ev.holders[j])} held the ${cref(cards[j])}, not ${obj(ev.assign[j])}.</span>`;
+        }
+        return s;
+      }
+      case 'out': return `${subj(ev.seat)} ${isAre(ev.seat)} out of cards.`;
+      case 'pass': return ev.reason === 'wrong'
+        ? `After the wrong call, the turn goes to ${obj(ev.to)}.`
+        : `${subj(ev.from)} ${isAre(ev.from)} out of cards, so the turn passes clockwise to ${obj(ev.to)}.`;
+      case 'sweep': return `${esc(TEAM_NAME[ev.team])} hold every card left and take the last ${ev.books.length === 1 ? 'book' : ev.books.length + ' books'}.`;
+      case 'end': return `${esc(TEAM_NAME[ev.winner])} win, ${ev.score[ev.winner]}–${ev.score[1 - ev.winner]}.`;
+    }
+    return '';
+  }
+
+  // ---------- flow ----------
+  // ---------- sound ----------
+  // Every sound is made on the fly with the Web Audio API, so there are no files to load and it works offline.
+  // Browsers only allow audio after the player touches the page, so the audio starts on the first tap.
+  const Sfx = (() => {
+    let ctx = null, master = null, noiseBuf = null, stale = false;
+    // iPhones and iPads have a long-standing bug: after a phone call, Siri or another app has used the speaker,
+    // the page's audio system is left at the wrong sample rate and everything plays slowed down and deep.
+    // The cure is to throw that audio system away and make a new one, so the context is rebuilt whenever the
+    // page comes back to the front, is interrupted, or its rate no longer matches a fresh one.
+    function ac() {
+      const C = window.AudioContext || window.webkitAudioContext;
+      if (!C) return null;
+      if (ctx && (stale || ctx.state === 'closed' || ctx.state === 'interrupted')) {
+        try { ctx.close(); } catch (e) {}
+        ctx = null; stale = false;
+      }
+      if (!ctx) {
+        try {
+          ctx = new C();
+          master = ctx.createGain(); master.gain.value = 0.9; master.connect(ctx.destination);
+          ctx.onstatechange = () => { if (ctx && ctx.state === 'interrupted') stale = true; };
+          // A silent blip: on iOS this settles the rate before anything real plays.
+          const b = ctx.createBuffer(1, 1, ctx.sampleRate), src = ctx.createBufferSource();
+          src.buffer = b; src.connect(ctx.destination); src.start(0);
+        } catch (e) { return null; }
+      }
+      if (ctx.state === 'suspended') ctx.resume().catch(() => {});
+      return ctx;
+    }
+    const markStale = () => { stale = true; };
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) markStale(); });
+    window.addEventListener('pageshow', markStale);
+    window.addEventListener('focus', markStale);
+    function tone(freq, at, dur, opt) {
+      opt = opt || {};
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = opt.type || 'sine';
+      o.frequency.setValueAtTime(freq, at);
+      if (opt.to) o.frequency.exponentialRampToValueAtTime(opt.to, at + dur);
+      g.gain.setValueAtTime(0.0001, at);
+      g.gain.exponentialRampToValueAtTime(opt.gain || 0.12, at + 0.012);
+      g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+      o.connect(g).connect(master);
+      o.start(at); o.stop(at + dur + 0.02);
+    }
+    function noise(at, dur, opt) {
+      opt = opt || {};
+      if (!noiseBuf) {
+        noiseBuf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.5), ctx.sampleRate);
+        const d = noiseBuf.getChannelData(0);
+        for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+      }
+      const src = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+      src.buffer = noiseBuf;
+      f.type = 'bandpass'; f.Q.value = opt.q || 1.2;
+      f.frequency.setValueAtTime(opt.from || 2000, at);
+      if (opt.to) f.frequency.exponentialRampToValueAtTime(opt.to, at + dur);
+      g.gain.setValueAtTime(0.0001, at);
+      g.gain.exponentialRampToValueAtTime(opt.gain || 0.25, at + 0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+      src.connect(f).connect(g).connect(master);
+      src.start(at); src.stop(at + dur + 0.02);
+    }
+    const notes = (list, at, step, dur, opt) => list.forEach((f, i) => tone(f, at + i * step, dur, opt));
+    const SOUNDS = {
+      deal: t => { for (let i = 0; i < 8; i++) noise(t + i * 0.055, 0.05, { from: 3200, gain: 0.18, q: 2 }); }, // riffle of cards
+      take: t => noise(t, 0.16, { from: 900, to: 3800, gain: 0.3 }),           // a card slides across the table
+      give: t => noise(t, 0.2, { from: 3800, to: 900, gain: 0.3 }),            // you hand a card over
+      miss: t => tone(210, t, 0.16, { type: 'triangle', to: 130, gain: 0.2 }), // a soft knock
+      asked: t => notes([988, 988], t, 0.13, 0.09, { type: 'square', gain: 0.05 }),
+      turn: t => notes([660, 880], t, 0.09, 0.16, { gain: 0.09 }),
+      good: t => notes([523, 659, 784], t, 0.08, 0.22, { type: 'triangle', gain: 0.14 }),
+      bad: t => notes([466, 392, 311], t, 0.1, 0.24, { type: 'triangle', gain: 0.13 }),
+      win: t => { notes([523, 659, 784, 1047], t, 0.12, 0.3, { type: 'triangle', gain: 0.15 }); tone(1047, t + 0.5, 0.6, { type: 'triangle', gain: 0.12 }); },
+      lose: t => notes([392, 370, 349, 262], t, 0.18, 0.35, { type: 'triangle', gain: 0.12 }),
+    };
+    function play(name, delay) {
+      if (window.__sfxLog) window.__sfxLog.push(name);
+      if (!settings.sound || !SOUNDS[name]) return;
+      const c = ac();
+      if (!c || c.state !== 'running') return;
+      try { SOUNDS[name](c.currentTime + 0.01 + (delay || 0)); } catch (e) {}
+    }
+    const unlock = () => { if (settings.sound) ac(); };
+    document.addEventListener('pointerdown', unlock, { passive: true });
+    document.addEventListener('keydown', unlock);
+    return { play, unlock, context: () => ac() };
+  })();
+
+  // Plays one sound for whatever just happened at the table, then a chime if it has become your turn.
+  let heardSeq = 0, heardTurn = null;
+  function soundFor() {
+    if (!st) return;
+    const fresh = st.log.filter(ev => ev.seq > heardSeq);
+    heardSeq = st.seq;
+    let main = null;
+    for (const ev of fresh) {
+      if (ev.type === 'end') main = ev.winner === 0 ? 'win' : 'lose';
+      else if ((ev.type === 'call' || ev.type === 'sweep') && main !== 'win' && main !== 'lose') main = ev.team === 0 ? 'good' : 'bad';
+      else if (ev.type === 'ask' && !main) main = ev.hit ? (ev.to === 0 ? 'give' : 'take') : 'miss';
+    }
+    if (main) Sfx.play(main);
+    const mine = !st.over && st.turn === 0 && !ui.give;
+    if (mine && heardTurn !== true && fresh.length) Sfx.play('turn', main ? 0.28 : 0);
+    heardTurn = mine;
+  }
+
+  // ---------- thinking ahead: Expert bots and the Coach ----------
+  // Searches run in a background worker so the table never freezes. If the browser won't start a worker,
+  // the same search runs on the page in short slices instead.
+  const EXPERT_MS = { xslow: 1500, slow: 1500, normal: 1000, fast: 600 };
+  function makeRunner() {
+    let worker = null, nextId = 1;
+    const waiting = new Map();
+    try {
+      worker = new Worker('search-worker.js');
+      worker.onmessage = e => { const w = waiting.get(e.data.id); if (w) { waiting.delete(e.data.id); w(e.data.out); } };
+      worker.onerror = () => { worker = null; waiting.forEach((w, id) => { waiting.delete(id); w(null); }); };
+    } catch (e) { worker = null; }
+    function local(d) {
+      return new Promise(resolve => {
+        if (d.kind === 'expert') return setTimeout(() => resolve({ move: L.expertMove(d.st, d.seat, Math.min(d.ms, 350)) }), 0);
+        const s = new L.Search(d.st, d.seat, { full: d.full, moves: d.moves, baseline: d.baseline });
+        let left = d.ms;
+        const step = () => { s.run(Math.min(40, left)); left -= 40; if (left > 0) setTimeout(step, 0); else resolve(s.result()); };
+        step();
+      });
+    }
+    return d => {
+      const copy = JSON.parse(JSON.stringify(d));
+      if (!worker) return local(copy).catch(() => null);
+      return new Promise(resolve => {
+        const id = nextId++;
+        waiting.set(id, out => (out ? resolve(out) : local(copy).then(resolve, () => resolve(null))));
+        try { worker.postMessage(Object.assign(copy, { id })); } catch (e) { waiting.delete(id); local(copy).then(resolve, () => resolve(null)); }
+      });
+    };
+  }
+  const botThink = makeRunner();     // Expert bot moves
+  const coachThink = makeRunner();   // Coach analysis, kept separate so it never delays the bots
+
+  const pct = v => Math.round(v * 100) + '%';
+  function moveText(m, seat) {
+    if (!m) return '';
+    if (m.type === 'call') return `call ${L.bookName(m.book)}`;
+    const bluff = st.players[seat] && st.players[seat].hand.includes(m.card);
+    return `ask ${esc(NAMES[m.to])} for the ${cref(m.card)}${bluff ? ' (bluff)' : ''}`;
+  }
+
+  // coach.analysis: the search for the position you're looking at now (used for "Show best move").
+  // coach.verdicts: how each of your moves compared with the best one the Coach found.
+  let coach = { analysis: null, verdicts: [], showHint: false };
+  function coachTick() {
+    if (!settings.coach || !st || st.over || !myTurn() || ui.give) return;
+    if (coach.analysis && coach.analysis.seq === st.seq) return;
+    const a = { seq: st.seq, result: null };
+    coach.analysis = a;
+    coach.showHint = false;
+    let baseline = null;
+    try { baseline = L.botMove(st, 0, 'sharp'); } catch (e) {}
+    a.promise = coachThink({ kind: 'analyse', st, seat: 0, full: true, ms: 1500, baseline }).then(r => {
+      a.result = r && !r.error ? r : null;
+      if (coach.analysis === a) render();
+      return a.result;
+    });
+  }
+  // Called just before you move: compares your move with the Coach's best in a focused head-to-head search.
+  function coachJudge(move) {
+    if (!settings.coach || !st || st.over) return;
+    const pre = JSON.parse(JSON.stringify(st));
+    const a = coach.analysis && coach.analysis.seq === st.seq ? coach.analysis : null;
+    const text = moveText(move, 0);
+    const v = { text, status: 'thinking' };
+    coach.verdicts.unshift(v);
+    coach.verdicts.length = Math.min(coach.verdicts.length, 30);
+    (a ? a.promise : Promise.resolve(null)).then(r => {
+      // You moved before the Coach finished looking at the position: search every candidate now, with your move
+      // as the one to beat, instead of rating your move against nothing.
+      if (!r || !r.best) {
+        return coachThink({ kind: 'analyse', st: pre, seat: 0, full: true, baseline: move, ms: 1500 }).then(r2 => {
+          const top = r2 && r2.ranked && r2.ranked[0];
+          return { r2, best: r2 && r2.best && r2.best.key !== L.moveKey(move) ? r2.best.move : (top ? top.move : null) };
+        });
+      }
+      const best = r && r.best ? r.best.move : null;
+      const moves = [move];
+      if (best && L.moveKey(best) !== L.moveKey(move)) moves.push(best);
+      return coachThink({ kind: 'analyse', st: pre, seat: 0, moves, baseline: move, ms: moves.length > 1 ? 900 : 400 }).then(r2 => ({ r2, best }));
+    }).then(({ r2, best }) => {
+      const byKey = k => r2 && r2.ranked ? r2.ranked.find(x => x.key === k) : null;
+      const mine = byKey(L.moveKey(move));
+      const top = best ? byKey(L.moveKey(best)) : null;
+      if (!mine) { v.status = 'failed'; render(); return; }
+      v.yours = mine.value;
+      // The search keeps your move as its pick unless the other move did clearly better on the same deals.
+      if (!top || top.key === mine.key || (r2.best && r2.best.key === mine.key) || mine.value >= top.value) {
+        v.rating = 'best';
+        v.best = null;
+      } else {
+        const gap = top.value - mine.value;
+        v.rating = gap <= 0.03 ? 'close' : gap <= 0.08 ? 'ok' : 'mistake';
+        v.best = { text: moveText(best, 0), value: top.value };
+      }
+      try { v.why = whyText(pre, v.rating === 'best' ? move : best, v.rating === 'best' ? null : move); } catch (e) { v.why = ''; }
+      v.status = 'done';
+      render();
+    }).catch(() => { v.status = 'failed'; render(); });
+  }
+  // A short, plain reason why a move is good, worked out only from what you knew at that moment:
+  // who could hold the card, what they have asked for, what everyone saw, and what your team certainly holds.
+  let oddsCache = { key: null, odds: null };
+  function cachedOdds(state) {
+    const key = state.seq + ':' + state.players.map(p => p.hand.join('')).join('|');
+    if (oddsCache.key !== key) oddsCache = { key, odds: L.cardOdds(state, 0, { samples: 4000 }).odds };
+    return oddsCache.odds;
+  }
+  function whyText(state, move, yours) {
+    const poss = L.possibleHolders(state, 0, true);
+    const hand = state.players[0].hand;
+    const who = s => (s === 0 ? 'you' : esc(NAMES[s]));
+    // Hit chances come from thousands of sampled deals that fit the table and every hand size (see cardOdds).
+    const odds = cachedOdds(state);
+    const chanceOf = (c, to) => {
+      const p = poss[c];
+      if (!p || !p.includes(to)) return 0;
+      return (odds[c] && odds[c][to]) || 0;
+    };
+    const teamHas = b => L.BOOK_CARDS[b].filter(c => poss[c].length && poss[c].every(s => L.teamOf(s) === 0)).length;
+    const bestHonest = () => {
+      let best = 0;
+      L.legalAsks(state, 0).forEach(m => { if (!hand.includes(m.card)) best = Math.max(best, chanceOf(m.card, m.to)); });
+      return best;
+    };
+    let why;
+    if (move.type === 'call') {
+      const sure = L.BOOK_CARDS[move.book].every(c => poss[c].length && poss[c].every(s => L.teamOf(s) === 0));
+      why = sure
+        ? `Your team certainly holds all six of ${L.bookName(move.book)}, so calling banks the book and keeps your turn.`
+        : `Calling ${L.bookName(move.book)} was a gamble: not every card was certainly on your team.`;
+    } else if (hand.includes(move.card)) {
+      const b = L.bookOf(move.card);
+      const chasers = L.opponentsOf(state, 0).filter(o => state.pub.hint[o][b]);
+      const mateAsked = L.teammatesOf(state, 0).filter(m => state.pub.softNot[move.card] && state.pub.softNot[move.card][m]);
+      why = `The best honest ask was only a ${pct(bestHonest())} chance, so you'd likely lose the turn anyway. This bluff makes the table think you don't hold the ${cref(move.card)}`
+        + (chasers.length ? `, sending ${chasers.map(who).join(' and ')} after the wrong player for it.` : ', so they look for it elsewhere.')
+        + (mateAsked.length ? ` This is a double bluff: ${who(mateAsked[0])} already asked for this card and missed. A sharp table reads a second ask by the same team as a sign the later asker holds the card, so it can point opponents at you.` : '');
+    } else {
+      const c = move.card, p = poss[c] || [], ch = chanceOf(c, move.to), b = L.bookOf(c);
+      if (p.length === 1 && p[0] === move.to) {
+        why = state.pub.known[c] === move.to
+          ? `Everyone saw ${who(move.to)} take the ${cref(c)}, so it's a sure hit.`
+          : `Card counts leave ${who(move.to)} as the only player who can hold the ${cref(c)}: a sure hit.`;
+      } else {
+        why = `A ${pct(ch)} chance: only ${p.map(who).join(', ')} could hold the ${cref(c)}`
+          + (state.pub.hint[move.to][b] ? `, and ${who(move.to)} has asked in ${L.bookName(b)}, so they likely hold cards there.` : '.');
+      }
+      const k = teamHas(b);
+      if (k >= 3) why += ` Your team already has ${k} of the six.`;
+    }
+    if (yours && yours.type === 'ask' && !hand.includes(yours.card)) {
+      const q = chanceOf(yours.card, yours.to);
+      why += q === 0 ? ` Your ask couldn't hit: ${who(yours.to)} was ruled out for the ${cref(yours.card)}.` : ` Your ask was a ${pct(q)} chance.`;
+    }
+    return why;
+  }
+  const RATING = { best: 'Best move', close: 'Close to best', ok: 'Reasonable', mistake: 'Mistake' };
+  function verdictHtml(v) {
+    if (v.status === 'thinking') return `<span class="rate">Checking…</span> You chose to ${v.text}.`;
+    if (v.status === 'failed') return `<span class="rate">No verdict</span> You chose to ${v.text}.`;
+    let s = `<span class="rate r-${v.rating}">${RATING[v.rating]}</span> You chose to ${v.text}: ${pct(v.yours)} estimated chance to win.`;
+    if (v.best) s += ` Best was to ${v.best.text}: ${pct(v.best.value)}.`;
+    if (v.why) s += `<div class="why"><b>Why:</b> ${v.why}</div>`;
+    return s;
+  }
+  function coachPanelHtml() {
+    if (!settings.coach || st.over) return '';
+    const latest = coach.verdicts[0];
+    let hint = '';
+    if (myTurn() && !ui.give) {
+      const a = coach.analysis && coach.analysis.seq === st.seq ? coach.analysis : null;
+      if (!a || !a.result) hint = '<span class="hint">Coach is thinking about this position…</span>';
+      else if (coach.showHint && a.result.best) {
+        let why = '';
+        try { why = whyText(st, a.result.best.move, null); } catch (e) {}
+        hint = `<span>Coach suggests: ${moveText(a.result.best.move, 0)} (${pct(a.result.best.value)} estimated chance to win).</span>${why ? `<div class="why"><b>Why:</b> ${why}</div>` : ''}`;
+      }
+      else hint = '<button class="btn" id="hintBtn">Show best move</button>';
+    }
+    return `<div class="coach">${latest ? `<div>${verdictHtml(latest)}</div>` : ''}${hint ? `<div>${hint}</div>` : ''}</div>`;
+  }
+  function renderCoachBox() {
+    $('coachBox').hidden = !settings.coach;
+    if (!settings.coach) return;
+    const done = coach.verdicts.filter(v => v.status === 'done');
+    const count = r => done.filter(v => v.rating === r).length;
+    $('coachSummary').textContent = done.length
+      ? `${done.length} move${done.length === 1 ? '' : 's'} checked: ${count('best') + count('close')} best or close, ${count('ok')} reasonable, ${count('mistake')} mistake${count('mistake') === 1 ? '' : 's'}.`
+      : 'Make a move and the Coach will compare it with the best move it can find.';
+    $('coachList').innerHTML = coach.verdicts.slice(0, 12).map(v => `<li>${verdictHtml(v)}</li>`).join('');
+  }
+
+  // ---------- table animations ----------
+  // After every move the table acts it out before the screen updates: the asked-for card travels from the asker
+  // to the player being asked, then either flies back into the asker's hand (a hit) or shakes and shows a
+  // cross (a miss). A called book's six cards gather in the middle and fly onto the winning team's shelf.
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const ANIM_SPEED = { xslow: 1.7, slow: 1.3, normal: 1, fast: 0.6 };
+  let animating = false, animSeq = 0;
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  function centerOf(el) {
+    if (!el) return null;
+    const r = el.getBoundingClientRect();
+    if (!r.width && !r.height) return null;
+    return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+  }
+  function seatPoint(s) {
+    if (s === 0) return centerOf(document.querySelector('#you .hand')) || centerOf(document.querySelector('#you .you-head'));
+    const seat = $('seat' + s);
+    return centerOf(seat && seat.querySelector('.fan')) || centerOf(seat);
+  }
+  function flyer(html, at, cls) {
+    const el = document.createElement('div');
+    el.className = 'fly ' + (cls || '');
+    el.innerHTML = html;
+    el.style.left = at.x + 'px';
+    el.style.top = at.y + 'px';
+    $('flyLayer').appendChild(el);
+    return el;
+  }
+  // Moves an element from `a` to `b` (both viewport points). Resolves even if the browser pauses animations.
+  function move(el, a, b, ms, scaleFrom, scaleTo) {
+    const dx = b.x - a.x, dy = b.y - a.y;
+    const anim = el.animate([
+      { transform: `translate(-50%, -50%) translate(0, 0) scale(${scaleFrom || 1})` },
+      { transform: `translate(-50%, -50%) translate(${dx}px, ${dy}px) scale(${scaleTo || 1})` },
+    ], { duration: ms, easing: 'cubic-bezier(.3,.7,.3,1)', fill: 'forwards' });
+    return Promise.race([anim.finished.catch(() => {}), wait(ms + 150)]);
+  }
+  function fade(el, ms) {
+    const anim = el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: ms, fill: 'forwards' });
+    return Promise.race([anim.finished.catch(() => {}), wait(ms + 150)]);
+  }
+  function glowSeat(s, cls, ms) {
+    const el = s === 0 ? $('you') : $('seat' + s);
+    if (!el) return;
+    el.classList.add(cls);
+    setTimeout(() => el.classList.remove(cls), ms);
+  }
+  const miniFace = c => `<span class="fc${L.isRed(c) ? ' red' : ''}">${c[0] === 'X' ? 'JKR' : L.cardRank(c)}<small>${L.cardSuit(c)}</small></span>`;
+
+  // ---------- bot voices ----------
+  // Bots say their asks out loud, with the small stumbles people make at a card table: fillers, a stuttered
+  // start, a repeated word. The lines are pre-recorded in five neural voices (Piper text-to-speech, public
+  // domain and CC0 voice models) and stitched together clip by clip. Until those recordings have loaded, or
+  // if they can't load, the device's own text-to-speech voices read the same kind of line.
+  const Voice = (() => {
+    const synth = window.speechSynthesis;
+    const pick = a => a[Math.floor(Math.random() * a.length)];
+    const chance = p => Math.random() < p;
+
+    // ----- recorded voices -----
+    let index = null;           // voices.json: clip order, offsets and first-sound time per voice
+    const buffers = {};         // seat -> decoded AudioBuffer (one "sprite" holding every clip)
+    const delays = {};          // seat -> decoder delay in seconds, measured on this device
+    const loading = {};
+    let playing = [];
+    const ctx = () => Sfx.context();
+    function loadIndex() {
+      if (!index) index = fetch('voices/voices.json').then(r => (r.ok ? r.json() : null)).catch(() => null);
+      return index;
+    }
+    // Loads the voices for the seats in this game. Safe to call repeatedly.
+    function preload(seats) {
+      if (!settings.voices) return;
+      seats.forEach(seat => {
+        if (loading[seat]) return;
+        loading[seat] = loadIndex().then(async idx => {
+          const c = ctx();
+          if (!idx || !idx.voices[seat] || !c) return;
+          const data = await (await fetch(`voices/voice${seat}.mp3`)).arrayBuffer();
+          const buf = await new Promise((ok, fail) => c.decodeAudioData(data, ok, fail));
+          // MP3 decoders add a short silence at the start on some devices; find it by where the first sound lands.
+          const ch = buf.getChannelData(0);
+          let i = 0;
+          while (i < ch.length && Math.abs(ch[i]) < 0.009) i++;
+          delays[seat] = Math.max(0, i / buf.sampleRate - idx.voices[seat].firstSound);
+          buffers[seat] = buf;
+        }).catch(() => { delete loading[seat]; });
+      });
+    }
+    const clipKeyForName = name => 'nm_' + String(name || '').toLowerCase().trim().replace(/\s+/g, '_');
+    // Plays a list of clip keys back to back from one seat's voice. Returns the time the last one ends.
+    function playClips(seat, keys, at) {
+      const c = ctx(), buf = buffers[seat];
+      return c && buf && indexData ? schedule(c, buf, seat, keys, at) : null;
+    }
+    let indexData = null;           // voices.json once loaded
+    loadIndex().then(d => { indexData = d; });
+    function schedule(c, buf, seat, keys, at) {
+      const offs = indexData.voices[seat].offsets;
+      const rate = settings.speed === 'fast' ? 1.15 : settings.speed === 'slow' || settings.speed === 'xslow' ? 1 : 1.07;
+      let t = Math.max(at, c.currentTime + 0.02, busyUntil);
+      lastStart = t;
+      for (const k of keys) {
+        const o = offs[k];
+        if (!o) continue;
+        const src = c.createBufferSource();
+        src.buffer = buf;
+        src.playbackRate.value = rate;
+        src.connect(c.destination);
+        src.start(t, Math.max(0, o[0] + delays[seat] - 0.01), o[1] + 0.03);
+        playing.push(src);
+        src.onended = () => { playing = playing.filter(x => x !== src); };
+        // Short, uneven pauses between words, like a person thinking.
+        t += (o[1] + 0.03) / rate + 0.01 + Math.random() * 0.04;
+      }
+      busyUntil = t + 0.12;
+      return t;
+    }
+    let busyUntil = 0, lastStart = 0;
+    const ready = seat => !!(buffers[seat] && indexData);
+
+    // ----- the lines, as clip keys -----
+    // Bots just name the card. When they ask you, they say your name first ("Vic, seven of clubs.").
+    // Now and then a quick "uh" or "um" keeps it sounding human.
+    function askClips(from, to, card) {
+      // A name with no recording is skipped by the recorded voices; the device voices can say any name.
+      const name = to === 0 && ME && ME !== 'You' ? clipKeyForName(ME) : null;
+      const filler = chance(0.15) ? pick(['op_uh', 'op_um']) : null;
+      return [filler, name, 's_' + card].filter(Boolean);
+    }
+
+    // ----- device voices (fallback) -----
+    const RANK_WORD = { 2: 'two', 3: 'three', 4: 'four', 5: 'five', 6: 'six', 7: 'seven', 8: 'eight', 9: 'nine', 10: 'ten', 11: 'jack', 12: 'queen', 13: 'king', 14: 'ace' };
+    const SUIT_WORD = { S: 'spades', H: 'hearts', D: 'diamonds', C: 'clubs' };
+    const spokenCard = c => (c === 'X1' ? 'black joker' : c === 'X2' ? 'red joker' : `${RANK_WORD[L.rankOf(c)]} of ${SUIT_WORD[c[0]]}`);
+    const speakName = n => n.toLowerCase().replace(/(^|[\s'-])(\p{L})/gu, (m, a, b) => a + b.toUpperCase());
+    const bookSpoken = b => L.bookName(b).replace('♠', 'spades').replace('♥', 'hearts').replace('♦', 'diamonds').replace('♣', 'clubs').replace('&', 'and');
+    // Prefer the most natural voices a device offers (names like Natural, Neural, Premium, Enhanced, Google).
+    let deviceVoices = [];
+    const loadDeviceVoices = () => {
+      if (!synth) return;
+      const all = synth.getVoices();
+      const en = all.filter(v => /^en/i.test(v.lang));
+      const score = v => (/natural|neural/i.test(v.name) ? 4 : 0) + (/premium/i.test(v.name) ? 3 : 0) + (/enhanced/i.test(v.name) ? 2 : 0) + (/google/i.test(v.name) ? 2 : 0);
+      deviceVoices = (en.length ? en : all).slice().sort((a, b) => score(b) - score(a));
+    };
+    if (synth) { loadDeviceVoices(); synth.addEventListener?.('voiceschanged', loadDeviceVoices); }
+    function deviceSay(seat, text) {
+      if (!synth || typeof SpeechSynthesisUtterance === 'undefined') return Promise.resolve();
+      return new Promise(resolve => {
+        try {
+          const u = new SpeechSynthesisUtterance(text);
+          const best = deviceVoices.slice(0, Math.max(1, Math.min(5, deviceVoices.length)));
+          if (best.length) u.voice = best[seat % best.length];
+          u.pitch = [1, 0.9, 1.1, 0.95, 1.15, 0.85][seat % 6];
+          u.rate = settings.speed === 'fast' ? 1.6 : settings.speed === 'xslow' ? 1.2 : 1.4;
+          u.onend = u.onerror = () => resolve();
+          setTimeout(resolve, 4000);   // in case the device never reports the end
+          synth.speak(u);
+        } catch (e) { resolve(); }
+      });
+    }
+    const TEXT = {
+      md_have: 'do you have the', md_have_st: 'd- do you have the', md_give: 'give me the', md_give_st: 'g- give me the',
+      md_take: "I'll take the", md_take_st: "I- I'll take the... the", md_the: 'the', md_think: "I think you've got the",
+      op_um: 'Um,', op_uh: 'Uh,', op_okay: 'Okay, okay.', op_hmm: 'Hmm. Let me think.', op_right: 'Right.', op_alright: 'Alright.', op_so: 'So,',
+      tl_gotit: 'You got it?', tl_please: 'Please.', tl_comeon: 'Come on.',
+      hit_1: 'Yep.', hit_2: 'Yeah, here.', hit_3: 'Ugh, fine. Here.', hit_4: 'Take it.', hit_5: 'Mm, yeah.',
+      miss_1: 'Nope.', miss_2: 'No.', miss_3: 'Sorry, no.', miss_4: "Don't have it.", miss_5: 'Nah.',
+      call_1: "I'm calling", call_2: 'Okay. Calling', call_3: "Um, I'll call", call_lg: "Let's go!",
+    };
+    const clipsToText = keys => keys.map(k => TEXT[k] || (k.startsWith('nm_') ? speakName(k.slice(3).replace(/_/g, ' ')) + ',' :
+      k.startsWith('q_') ? spokenCard(k.slice(2)) + '?' : k.startsWith('s_') ? spokenCard(k.slice(2)) + '.' :
+      k.startsWith('b_') ? bookSpoken(k.slice(2)) + '.' : '')).join(' ');
+
+    // ----- speaking -----
+    let spokenGive = null;
+    function stop() {
+      playing.forEach(s => { try { s.stop(); } catch (e) {} });
+      playing = [];
+      if (synth) synth.cancel();
+    }
+    // Says a line and returns { end, done }: `end` is when it finishes on the audio clock (recorded voices only),
+    // `done` is a promise that settles when it has finished, so the table can wait before moving on.
+    function speak(seat, keys, at) {
+      const text = clipsToText(keys);
+      if (!settings.voices) return { end: null, done: Promise.resolve() };
+      if (ready(seat)) {
+        const c = ctx();
+        const end = playClips(seat, keys, at || 0);
+        if (window.__speechLog) window.__speechLog.push({ seat, text, recorded: true, start: lastStart, end, seq: st && st.seq, turn: st && st.turn, give: ui.give ? ui.give.from + ':' + ui.give.card : null });
+        if (end == null) return { end: null, done: Promise.resolve() };
+        return { end, done: new Promise(r => setTimeout(r, Math.max(0, (end - c.currentTime) * 1000))) };
+      }
+      if (window.__speechLog) window.__speechLog.push({ seat, text, recorded: false, seq: st && st.seq, turn: st && st.turn, give: ui.give ? ui.give.from + ':' + ui.give.card : null });
+      return { end: null, done: deviceSay(seat, text) };
+    }
+    return {
+      available: true,
+      preload,
+      // Bots speak; your own moves stay silent. Anything still being said from the previous move is cut off.
+      // Lines never cut each other off: each one starts after the previous one has finished, and the table
+      // waits for the last one before the next move. Returns a promise for when everything has been said.
+      ask(ev) {
+        if (ev.from === 0) return Promise.resolve();
+        // A bot asking you for a card you hold already said its line when the hand-over panel opened.
+        if (spokenGive && ev.to === 0 && ev.from === spokenGive.from && ev.card === spokenGive.card) { spokenGive = null; return Promise.resolve(); }
+        const first = speak(ev.from, askClips(ev.from, ev.to, ev.card));
+        if (ev.to === 0) return first.done;
+        const answer = () => speak(ev.to, [pick(ev.hit ? ['hit_1', 'hit_2', 'hit_3', 'hit_4', 'hit_5'] : ['miss_1', 'miss_2', 'miss_3', 'miss_4', 'miss_5'])], first.end ? first.end + 0.18 : 0);
+        // With a recorded first line the answer is scheduled on the audio clock; otherwise it waits for the device voice.
+        return first.end != null ? answer().done : first.done.then(() => answer().done);
+      },
+      // Said as soon as a bot asks you for a card you hold, while the hand-over panel is open.
+      askYou(from, card) {
+        spokenGive = { from, card };
+        return speak(from, askClips(from, 0, card)).done;
+      },
+      call(ev) {
+        if (ev.seat === 0) return Promise.resolve();
+        return speak(ev.seat, ['call_lg', 'call_1', 'b_' + ev.book]).done;
+      },
+      stop,
+      // Says one line in the first bot's voice: a quick way to check the sound.
+      test() {
+        stop();
+        const seat = st ? st.players.findIndex((p, i) => i > 0 && p.hand.length) : 1;
+        const name = ME && ME !== 'You' ? clipKeyForName(ME) : null;
+        setTimeout(() => speak(seat > 0 ? seat : 1, [name, 's_C7'].filter(Boolean)), 300);
+      },
+    };
+  })();
+
+  async function animateAsk(ev, k) {
+    const a = seatPoint(ev.from), b = seatPoint(ev.to);
+    if (!a || !b) return;
+    glowSeat(ev.to, 'being-asked', 900 * k);
+    const said = Voice.ask(ev);
+    const req = flyer(`${miniFace(ev.card)}<span class="q">?</span>`, a, 'req');
+    await move(req, a, b, 420 * k, 0.8, 1);
+    if (ev.hit) {
+      req.remove();
+      const card = flyer(cardHtml(ev.card), b, 'hit');
+      await move(card, b, a, 480 * k, 1, 0.9);
+      await fade(card, 120 * k);
+      card.remove();
+    } else {
+      req.classList.add('nope');
+      req.insertAdjacentHTML('beforeend', '<span class="x">✕</span>');
+      req.animate([{ transform: 'translate(-50%, -50%) translateX(0)' }, { transform: 'translate(-50%, -50%) translateX(-6px)' },
+        { transform: 'translate(-50%, -50%) translateX(6px)' }, { transform: 'translate(-50%, -50%) translateX(0)' }], { duration: 260 * k });
+      await wait(420 * k);
+      await fade(req, 180 * k);
+      req.remove();
+    }
+    await said;
+  }
+
+  async function animateCall(ev, k) {
+    const said = Voice.call(ev);
+    const mid = centerOf($('center'));
+    if (!mid) { await said; return; }
+    const cards = L.BOOK_CARDS[ev.book];
+    const flying = cards.map((c, i) => {
+      const from = seatPoint(ev.holders[i]) || mid;
+      const el = flyer(cardHtml(c), from, 'book');
+      const to = { x: mid.x + (i - 2.5) * 26, y: mid.y };
+      return { el, done: wait(i * 60 * k).then(() => move(el, from, to, 420 * k, 0.7, 1)), to };
+    });
+    await Promise.all(flying.map(f => f.done));
+    const badge = flyer(ev.correct ? '✓ Correct' : '✕ Wrong', { x: mid.x, y: mid.y - 62 }, 'badge ' + (ev.correct ? 'good' : 'bad'));
+    await wait(520 * k);
+    const spine = document.querySelector(`[data-spine="${ev.book}"]`);
+    const shelf = centerOf(spine) || { x: mid.x, y: mid.y - 200 };
+    await Promise.all(flying.map((f, i) => wait(i * 40 * k).then(() => move(f.el, f.to, shelf, 380 * k, 1, 0.3))));
+    flying.forEach(f => f.el.remove());
+    await fade(badge, 150 * k);
+    badge.remove();
+    await said;
+  }
+
+  // Plays every table event newer than the last one shown, one after another.
+  async function playEvents() {
+    const fresh = st.log.filter(ev => ev.seq > animSeq);
+    animSeq = st.seq;
+    const k = ANIM_SPEED[settings.speed] || 1;
+    for (const ev of fresh) {
+      if (reduceMotion.matches || document.hidden) {
+        if (ev.type === 'ask') await Voice.ask(ev);
+        else if (ev.type === 'call') await Voice.call(ev);
+      }
+      else if (ev.type === 'ask') await animateAsk(ev, k);
+      else if (ev.type === 'call') await animateCall(ev, k);
+    }
+  }
+
+  // ---------- your name ----------
+  // Each new game asks what the table should call you (filled in with the last name you gave).
+  function askName() {
+    const n = st.players.length;
+    const cur = savedNames(n)[0];
+    $('nameInput').value = cur === 'You' ? '' : cur;
+    $('namePrompt').hidden = false;
+    setTimeout(() => { try { $('nameInput').focus(); $('nameInput').select(); } catch (e) {} }, 50);
+  }
+  $('nameForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const name = cleanName($('nameInput').value) || 'You';
+    // Your name is shared by the 4 and 6 player games.
+    [4, 6].forEach(k => { const list = savedNames(k); list[0] = name; settings[namesKey(k)] = list; });
+    saveSettings();
+    $('namePrompt').hidden = true;
+    setMode(st.players.length);
+    buildTable();
+    render();
+    schedule();
+  });
+
+  // ---------- sending games to Claude for review ----------
+  // Each finished game is saved to this page's database, with the starting deal and every move, so Claude can
+  // replay it and point out mistakes. The "Send to Claude" button saves a game in progress the same way.
+  let reviewDb = null;
+  try { window.claude?.use?.('db')?.then(d => { reviewDb = d; if (st) render(); }, () => {}); } catch (e) {}
+  const plain = h => String(h).replace(/<[^>]*>/g, '');
+  function gameRecord() {
+    return {
+      gameId: st.gameId,
+      savedAt: new Date().toISOString(),
+      finished: !!st.over,
+      players: st.players.length,
+      rules: st.rules,
+      botLevel: settings.level,
+      names: NAMES,
+      initial: st.initial,
+      log: st.log,
+      score: st.score,
+      winner: st.winner,
+      coach: coach.verdicts.filter(v => v.status === 'done').map(v => ({
+        move: plain(v.text), rating: v.rating, yours: v.yours, best: v.best ? { move: plain(v.best.text), value: v.best.value } : null,
+      })),
+    };
+  }
+  async function sendGame() {
+    if (!reviewDb || !st || !st.initial || ui.sendState === 'sending') return;
+    ui.sendState = 'sending';
+    render();
+    try {
+      await reviewDb.doc('games/' + st.gameId).set(gameRecord());
+      ui.sendState = 'sent';
+      ui.sentSeq = st.seq;
+    } catch (e) {
+      console.error(e);
+      ui.sendState = 'failed';
+    }
+    render();
+  }
+  function sendStatusHtml() {
+    if (!reviewDb || !st.initial) return '';
+    if (ui.sendState === 'sending') return '<span class="seat-meta">Saving for Claude…</span>';
+    if (ui.sendState === 'failed') return '<button class="btn" id="sendBtn">Saving failed: try again</button>';
+    if (ui.sendState === 'sent' && ui.sentSeq === st.seq) return '<span class="seat-meta">Saved for Claude to review</span>';
+    return `<button class="btn" id="sendBtn" title="Save this game so Claude can review your moves">${st.over ? 'Send game to Claude' : 'Send game so far to Claude'}</button>`;
+  }
+
+  // Every move goes through here: save, act it out on the table, then show the new position and carry on.
+  async function afterAction() {
+    saveGame();
+    animating = true;
+    try { await playEvents(); } catch (e) { console.error(e); }
+    animating = false;
+    render();
+    schedule();
+    if (st.over && ui.sentSeq !== st.seq) sendGame();
+  }
+
+  function newGame() {
+    const n = settings.players === '6' ? 6 : 4;
+    setMode(n);
+    st = L.newGame({ players: n, names: NAMES, humanSeats: [0], bluffing: settings.bluffing !== 'off',
+      naming: settings.naming !== 'off', strict: settings.strict !== 'off' });
+    st.gameId = Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+    st.initial = { hands: st.players.map(p => p.hand.slice()), turn: st.turn };
+    ui = { tab: 'ask', card: null, callBook: null, error: null, shownSeq: 0, give: null, assign: {} };
+    buildTable();
+    Voice.preload(st.players.map((_, i) => i).filter(i => i > 0));
+    heardSeq = 0; heardTurn = null;
+    coach = { analysis: null, verdicts: [], showHint: false };
+    animSeq = 0;
+    Sfx.play('deal');
+    askName();
+    render();
+    schedule();
+  }
+
+  function buildTable() {
+    const n = st.players.length;
+    const table = $('table');
+    table.className = 'table p' + n;
+    let html = '';
+    for (let s = 1; s < n; s++) html += `<div class="seat s${s}" data-seat="${s}" id="seat${s}"></div>`;
+    table.innerHTML = html + '<div class="center" id="center" aria-live="polite"></div><div class="you" id="you"></div>';
+    $('blurb').textContent = `${n === 6 ? 'Six' : 'Four'} players, nine books, first team to five. You play with ${MATES}; ${OPPS} play against you. Turns go clockwise.`;
+    const r = st.rules;
+    const six = n === 6;
+    $('rulesList').innerHTML = `
+      <li><b>What it is:</b> a card game for ${six ? 'six players in two teams of three' : 'four players in two teams of two'}, played with one deck. It is about bluffing, working out who has what, and remembering what everyone asked for.</li>
+      <li><b>The deck:</b> 52 cards plus 2 jokers, so 54 cards. They split into 9 groups called books. Each suit has a low book (2 to 7) and a high book (9 to ace). That makes 8 books. All four 8s plus both jokers make the ninth book.</li>
+      <li><b>The goal:</b> be the first team to win 5 books. Nobody can see anyone else's cards. Everyone is dealt the same number of cards (or one fewer), at random.</li>
+      <li><b>Who you talk to:</b> ${six ? 'the players sitting between your teammates are your opponents: left, front and right.' : 'the players on your left and right are your opponents. The player across from you is your teammate.'} You only ever talk to opponents. You can never talk to your teammate or ask them for cards. Your teammate hears every question, though, and can work things out from it together with their own hand.</li>
+      <li><b>Asking:</b> on your turn, ask one opponent for one card. ${r.strict ? 'You must already hold at least one card from that card\'s book.' : 'Rule checks are off this game, so you can ask for any card in an open book.'} For example, if you hold the 2 of diamonds, you can ask for any card from low diamonds. If you hold no low diamonds, you cannot ask for any of them. If an opponent then takes your 2 of diamonds, you cannot ask in low diamonds any more, not even to get that 2 back.</li>
+      <li><b>If they have it:</b> they must hand it over, and you ask again. When a bot asks you for a card you hold, you swipe it across to them.</li>
+      <li><b>If they don't:</b> your turn ends and it becomes their turn. Their "no" is useful too: everyone now knows they don't hold that card.</li>
+      <li><b>Bluffing:</b> ${r.bluffing ? 'you may ask for a card you already hold. It always misses, but it makes the table think you don\'t have it. Sharp bots notice when two players on the same team ask for the same card, and guess the later asker holds it.' : 'bluffing is off this game, so you can only ask for cards you don\'t hold.'}</li>
+      <li><b>Calling a book:</b> on your turn, when you believe your team holds all six cards of a book, you can call it${r.naming ? ' and say which teammate holds each card' : ''}. If your team really does hold all six${r.naming ? ' and you named every holder right' : ''}, your team wins the book and you keep your turn. If not, the other team wins it, and the turn goes to the first opponent clockwise from you who held one of its cards. So be careful. For example, if neither opponent had a card you asked for, and you don't hold it, your teammate must have it.</li>
+      <li><b>Running out:</b> a player with no cards is out. If it was their turn, it passes clockwise to the next player with cards. You can never pass your turn to a teammate. If one team runs out of cards completely, the other team takes every book still left.</li>
+      <li><b>Teammate setting:</b> Smart teammates think about who gets the turn if their ask misses, and avoid handing it to an opponent who could use it to take a book from your team. Mid teammates just play the odds.</li>
+      <li><b>Coach percentages:</b> hit chances come from thousands of possible deals that fit everything said at the table and every player's hand size. Chance to win comes from playing each move out many times with Sharp bots.</li>
+      <li><b>Voices:</b> recorded with the Chatterbox text-to-speech model (MIT licence).</li>`;
+  }
+
+  function schedule() {
+    clearTimeout(timer);
+    const g = ++gen;
+    // Bots wait while the names panel is open, so nothing pops up mid-typing.
+    if (!st || st.over || ui.give || !$('namesBox').hidden || !$('namePrompt').hidden || st.players[st.turn].isHuman) return;
+    const seat = st.turn;
+    const started = Date.now();
+    const delay = SPEED_MS[settings.speed] || 850;
+    const thinking = settings.level === 'expert'
+      ? botThink({ kind: 'expert', st, seat, ms: EXPERT_MS[settings.speed] || 1000, steer: steerFor(seat) }).then(r => (r && r.move) || null, () => null)
+      : Promise.resolve(null);
+    thinking.then(planned => {
+      if (g !== gen) return;
+      timer = setTimeout(() => playBot(g, seat, planned), Math.max(0, delay - (Date.now() - started)));
+    });
+  }
+
+  // Smart teammates think about who gets the turn if their ask misses (a miss hands the turn to the player asked),
+  // and avoid giving it to an opponent who could use it to take a set from your team.
+  const steerFor = seat => (L.teamOf(seat) === 0 && settings.teammate === 'smart' ? 0.7 : 0);
+
+  // Ask buttons sit where the opponents sit: the left opponent's button at the left edge, the right opponent's at the
+  // right edge, and the front opponent (6 players) in the middle, so a slip of the finger doesn't ask the wrong player.
+  const askSide = o => { const opps = L.opponentsOf(st, 0); return o === opps[0] ? 'ask-l' : o === opps[opps.length - 1] ? 'ask-r' : 'ask-f'; };
+  const askLabel = o => { const side = askSide(o), w = `<span class="ask-w">Ask </span>${esc(NAMES[o])}`; return side === 'ask-l' ? `&larr; ${w}` : side === 'ask-r' ? `${w} &rarr;` : w; };
+  const askButtons = render => L.opponentsOf(st, 0).map(render).join('');
+
+  function playBot(g, seat, planned) {
+    if (g !== gen || !st || st.over || st.turn !== seat) return;
+    {
+      try {
+        // The planned move was worked out in the background; use it only if it is still legal.
+        const valid = planned && (planned.type === 'call'
+          ? !L.callError(st, seat, planned.book, planned.assign)
+          : !L.askError(st, seat, planned.to, planned.card));
+        const move = valid ? planned : L.botMove(st, seat, settings.level === 'expert' ? 'sharp' : settings.level, undefined, false, steerFor(seat));
+        // A bot asking you for a card you hold waits until you swipe it over.
+        if (move.type === 'ask' && move.to === 0 && st.players[0].hand.includes(move.card)) {
+          ui.give = { from: seat, card: move.card };
+          Sfx.play('asked');
+          Voice.askYou(seat, move.card);
+          render();
+          return;
+        }
+        L.applyMove(st, seat, move);
+      } catch (e) {
+        // A bot move should never be illegal. If one is, fall back to any legal ask so the game can't stall.
+        console.error(e);
+        const legal = L.legalAsks(st, seat);
+        const m = legal.find(x => x.to !== 0 || !st.players[0].hand.includes(x.card));
+        if (m) L.applyMove(st, seat, { type: 'ask', to: m.to, card: m.card });
+        else if (legal.length) { ui.give = { from: seat, card: legal[0].card }; render(); return; }
+      }
+      afterAction();
+    }
+  }
+
+  function humanAsk(to) {
+    if (!ui.card || !myTurn() || ui.give || animating) return;
+    if (!L.askError(st, 0, to, ui.card)) coachJudge({ type: 'ask', to, card: ui.card });
+    try {
+      const ev = L.ask(st, 0, to, ui.card);
+      ui.error = null;
+      ui.openBook = null;
+      if (ev.hit) ui.card = null;
+    } catch (e) { ui.error = e.message; render(); return; }
+    afterAction();
+  }
+
+  function handOver() {
+    if (!ui.give) return;
+    const { from, card } = ui.give;
+    ui.give = null;
+    try {
+      if (st.turn === from && !st.over) L.applyMove(st, from, { type: 'ask', to: 0, card });
+    } catch (e) { console.error(e); }
+    afterAction();
+  }
+
+  let giveKey = null;
+  function renderGive() {
+    const box = $('give');
+    box.hidden = !ui.give;
+    if (!ui.give) { giveKey = null; return; }
+    const { from, card } = ui.give;
+    const key = from + card;
+    if (key === giveKey) return;
+    giveKey = key;
+    $('giveTitle').innerHTML = `${NAMES[from]} asks you for the ${cref(card)}`;
+    $('giveText').textContent = `You have it, so you must hand it over. Swipe the card across to ${NAMES[from]}.`;
+    const track = $('track');
+    track.innerHTML = `<span class="arrow">Swipe &rarr;</span><div class="goal">${esc(NAMES[from])}</div>${cardHtml(card)}`;
+    const el = track.querySelector('.card');
+    el.tabIndex = 0;
+    el.setAttribute('role', 'button');
+    el.setAttribute('aria-label', `Give the ${L.cardText(card)} to ${NAMES[from]}. Swipe right, or press Enter.`);
+    let x0 = null, dx = 0, done = false;
+    const max = () => track.clientWidth - el.offsetWidth - 20;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      el.classList.remove('dragging', 'snap');
+      el.classList.add('gone');
+      el.style.transform = `translateX(${max() + 40}px)`;
+      setTimeout(handOver, 230);
+    };
+    el.addEventListener('pointerdown', e => {
+      if (done) return;
+      x0 = e.clientX - dx;
+      el.setPointerCapture(e.pointerId);
+      el.classList.add('dragging');
+      el.classList.remove('snap');
+    });
+    el.addEventListener('pointermove', e => {
+      if (x0 == null || done) return;
+      dx = Math.max(0, Math.min(max(), e.clientX - x0));
+      el.style.transform = `translateX(${dx}px)`;
+    });
+    const release = () => {
+      if (x0 == null || done) return;
+      x0 = null;
+      el.classList.remove('dragging');
+      if (dx >= max() * 0.7) finish();
+      else { dx = 0; el.classList.add('snap'); el.style.transform = 'translateX(0)'; }
+    };
+    el.addEventListener('pointerup', release);
+    el.addEventListener('pointercancel', release);
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); finish(); } });
+    setTimeout(() => el.focus({ preventScroll: true }), 50);
+  }
+
+  function humanCall() {
+    if (!ui.callBook || !myTurn() || ui.give || animating) return;
+    if (!L.callError(st, 0, ui.callBook, ui.assign)) coachJudge({ type: 'call', book: ui.callBook, assign: L.namingRequired(st) ? Object.assign({}, ui.assign) : undefined });
+    try {
+      L.call(st, 0, ui.callBook, ui.assign);
+      ui.error = null;
+      ui.callBook = null;
+      ui.assign = {};
+      ui.tab = 'ask';
+    } catch (e) { ui.error = e.message; render(); return; }
+    afterAction();
+  }
+
+  // Books your team certainly holds, worked out only from your hand and what's been said at the table,
+  // with who holds each card (for games where a call must name holders).
+  function certainBooks() {
+    const poss = L.possibleHolders(st, 0, true);
+    const naming = L.namingRequired(st);
+    const out = {};
+    for (const b of L.BOOKS) {
+      if (st.claimed[b] != null) continue;
+      const cards = L.BOOK_CARDS[b];
+      if (cards.every(c => poss[c].length && poss[c].every(s => L.teamOf(s) === 0) && (!naming || poss[c].length === 1))) {
+        out[b] = naming ? Object.fromEntries(cards.map(c => [c, poss[c][0]])) : undefined;
+      }
+    }
+    return out;
+  }
+  // One click on a glowing book in your hand calls it. Only offered when the call is certain to be right.
+  function quickCall(b) {
+    if (!myTurn() || ui.give || animating) return;
+    const sure = certainBooks();
+    if (!(b in sure)) return;
+    ui.callBook = b;
+    ui.assign = sure[b] || {};
+    humanCall();
+  }
+
+  // ---------- rendering ----------
+  function cardHtml(c) {
+    const joker = c[0] === 'X';
+    return `<div class="card${L.isRed(c) ? ' red' : ''}${joker ? ' joker' : ''}" aria-label="${L.cardText(c)}">
+      <span class="r">${joker ? 'JKR' : L.cardRank(c)}</span><span class="s">${L.cardSuit(c)}</span><span class="big">${L.cardSuit(c)}</span></div>`;
+  }
+
+  const myTurn = () => !st.over && st.turn === 0;
+
+  function renderSeat(s) {
+    const el = $('seat' + s);
+    const p = st.players[s];
+    const n = p.hand.length;
+    const opp = L.teamOf(s) !== 0;
+    const canTarget = myTurn() && opp && n > 0 && ui.tab === 'ask' && !!ui.card;
+    el.className = 'seat s' + s + (st.turn === s && !st.over ? ' active' : '') + (n === 0 ? ' out' : '') + (canTarget ? ' target' : '');
+    el.tabIndex = canTarget ? 0 : -1;
+    el.setAttribute('role', canTarget ? 'button' : 'group');
+    el.setAttribute('aria-label', canTarget ? `Ask ${p.name} for the ${L.cardText(ui.card)}` : p.name);
+    const backs = Array.from({ length: Math.min(n, st.players.length === 6 ? 9 : 14) }, () => '<div class="back"></div>').join('');
+    const asked = settings.notes ? L.BOOKS.filter(b => st.pub.hint[s][b] && st.claimed[b] == null) : [];
+    el.innerHTML = `
+      <div class="seat-name">${esc(p.name)}</div>
+      <div class="seat-meta">
+        <span class="chip ${opp ? 'them' : 'us'}">${opp ? 'Opponent' : 'Teammate'}</span>
+        ${n === 0 ? '<span class="chip out">Out</span>' : `<span>${n} card${n === 1 ? '' : 's'}</span>`}
+      </div>
+      <div class="fan" aria-hidden="true">${backs}</div>
+      ${settings.notes && asked.length ? `<div class="asked">Has asked in <b>${asked.map(L.bookName).join(', ')}</b></div>` : ''}`;
+  }
+
+  function renderCenter() {
+    const last = [...st.log].reverse().find(e => e.type !== 'end');
+    let label, name;
+    if (st.over) { label = 'Game over'; name = TEAM_NAME[st.winner] + ' win'; }
+    else if (st.turn === 0) { label = 'Your move'; name = 'Your turn'; }
+    else if (ui.give) { label = 'Opponent'; name = `${NAMES[st.turn]} wants a card`; }
+    else if (!$('namesBox').hidden) { label = 'Paused'; name = 'Close Names to carry on'; }
+    else { label = L.teamOf(st.turn) === 0 ? 'Teammate' : 'Opponent'; name = `${NAMES[st.turn]} is thinking…`; }
+    const fresh = last && last.seq !== ui.shownSeq;
+    if (last) ui.shownSeq = last.seq;
+    $('center').innerHTML = `
+      <div class="turn-label">${label}</div>
+      <div class="turn-name">${esc(name)}</div>
+      <div class="event${fresh ? ' fresh' : ''}">${last ? describe(last) : (st.players.length === 6 ? 'Cards are dealt, nine each.' : 'Cards are dealt. Each team has one 14-card hand and one 13-card hand.')}</div>`;
+  }
+
+  function renderYou() {
+    const me = st.players[0];
+    const n = me.hand.length;
+    const el = $('you');
+    el.className = 'you' + (myTurn() ? ' active' : '');
+    const groups = L.BOOKS.map(b => ({ b, cards: me.hand.filter(c => L.bookOf(c) === b) })).filter(g => g.cards.length);
+    const sure = st.over ? {} : certainBooks();
+    // Hovering a set in your hand (or tapping its name on a touch screen) opens a picker right there:
+    // the set's six cards and the Ask buttons, so you never have to scroll down to the Ask panel.
+    const askable = myTurn() && !ui.give ? L.askableBooks(st, 0) : [];
+    const pop = b => {
+      if (!askable.includes(b)) return '';
+      const bluff = st.rules.bluffing;
+      const picked = ui.card && L.bookOf(ui.card) === b;
+      const cards = L.BOOK_CARDS[b].map(c => {
+        const held = me.hand.includes(c);
+        return `<button class="mini${L.isRed(c) ? ' red' : ''}${held ? ' held' : ''}${ui.card === c ? ' selected' : ''}" data-card="${c}" aria-pressed="${ui.card === c}" ${held && !bluff ? 'disabled' : ''} title="${held ? (bluff ? 'Yours: asking is a bluff' : 'Yours') : 'Ask for the ' + L.cardText(c)}">${c[0] === 'X' ? 'JKR' : L.cardRank(c)}<small>${held ? 'yours' : L.cardSuit(c)}</small></button>`;
+      }).join('');
+      const asks = askButtons(o => `<button class="btn${picked ? ' primary' : ''} ${askSide(o)}" data-ask="${o}" ${picked && st.players[o].hand.length ? '' : 'disabled'}>${askLabel(o)}</button>`);
+      return `<div class="pop" role="group" aria-label="Ask for a card in ${L.bookName(b)}">
+        <div class="pop-head"><span>${L.bookName(b)}</span><button class="btn" data-closepop="1">Close</button></div>
+        <div class="pick-cards">${cards}</div>
+        <div class="ask-bar"><span class="what">${picked ? `The ${cref(ui.card)}${me.hand.includes(ui.card) ? ' (bluff)' : ''} from:` : 'Pick a card, then who to ask:'}</span><div class="ask-row">${asks}</div></div></div>`;
+    };
+    const hand = n ? `<div class="hand">${groups.map(g => `
+        <div class="group${g.b in sure ? ' callable' : ''}${askable.includes(g.b) ? ' has-pop' : ''}${ui.openBook === g.b || (ui.card && L.bookOf(ui.card) === g.b) ? ' open' : ''}">${askable.includes(g.b)
+          ? `<button class="group-label as-btn" data-openbook="${g.b}" aria-expanded="${ui.openBook === g.b}">${L.bookName(g.b)}${g.b in sure ? ' · your team has all six' : ''}</button>`
+          : `<div class="group-label">${L.bookName(g.b)}${g.b in sure ? ' · your team has all six' : ''}</div>`}
+        <div class="group-cards">${g.cards.map(cardHtml).join('')}</div>${pop(g.b)}
+        ${g.b in sure ? `<button class="btn primary call-set" data-quickcall="${g.b}" ${myTurn() && !ui.give ? '' : 'disabled title="Wait for your turn"'}>Call ${L.bookName(g.b)}</button>` : ''}</div>`).join('')}</div>` : '';
+
+    let panel;
+    if (st.over) {
+      panel = `<p class="hint">${TEAM_NAME[st.winner]} win. Deal again to play another game.</p>`;
+    } else if (n === 0) {
+      panel = `<p class="hint">You're out of cards. ${MATES} ${st.players.length === 6 ? 'play' : 'plays'} on for your team.</p>`;
+    } else {
+      const disabled = !myTurn();
+      const tabs = `<div class="tabs" role="tablist">
+          <button class="tab" role="tab" data-tab="ask" aria-selected="${ui.tab === 'ask'}">Ask</button>
+          <button class="tab" role="tab" data-tab="call" aria-selected="${ui.tab === 'call'}">Call</button>
+          ${settings.notes ? `<button class="tab narrow-only" role="tab" data-tab="notes" aria-selected="${ui.tab === 'notes'}">Notes</button>` : ''}
+        </div>`;
+      let body = '';
+      if (ui.tab === 'notes' && settings.notes) {
+        body = `<div class="notes">${notesHtml()}</div>`;
+      } else if (ui.tab === 'ask' || ui.tab === 'notes') {
+        const bluff = st.rules.bluffing;
+        const books = L.askableBooks(st, 0);
+        const rows = books.map(b => `
+          <div class="pick-row"><div class="group-label">${L.bookName(b)}</div><div class="pick-cards">
+          ${L.BOOK_CARDS[b].map(c => {
+            const held = me.hand.includes(c);
+            const sel = ui.card === c;
+            const title = held ? (bluff ? `You hold the ${L.cardText(c)}. Asking for it is a bluff.` : `You hold the ${L.cardText(c)}.`) : `Ask for the ${L.cardText(c)}`;
+            return `<button class="mini${L.isRed(c) ? ' red' : ''}${held ? ' held' : ''}${sel ? ' selected' : ''}" data-card="${c}" title="${title}" aria-pressed="${sel}" ${disabled || (held && !bluff) ? 'disabled' : ''}>
+              ${c[0] === 'X' ? 'JKR' : L.cardRank(c)}<small>${held ? 'yours' : L.cardSuit(c)}</small></button>`;
+          }).join('')}</div></div>`).join('');
+        const opps = L.opponentsOf(st, 0);
+        const bar = `<div class="ask-bar">
+            <span class="what">${ui.card ? `Ask for the ${cref(ui.card)}${me.hand.includes(ui.card) ? ' (bluff)' : ''} from:` : 'Pick a card, then who to ask:'}</span>
+            <div class="ask-row">${askButtons(o => `<button class="btn ${askSide(o)}" data-ask="${o}" ${disabled || !ui.card || !st.players[o].hand.length ? 'disabled' : ''}>${askLabel(o)}</button>`)}</div>
+          </div>`;
+        const stuck = !disabled && !L.legalAsks(st, 0).length;
+        body = `<p class="hint">${stuck ? 'Every card you could ask for is already in your hand, so there is nothing to ask. Call a book instead.' : disabled ? `Waiting for ${NAMES[st.turn]}…` : (st.rules.strict ? 'You can only ask for cards in books you already hold a card from.' : 'Rule checks are off, so you can ask in any open book.') + ' Dashed cards are ones you hold' + (bluff ? ', so asking for one is a bluff.' : '. Bluffing is off this game.')}</p>
+          <div class="picker">${rows}</div>${bar}`;
+      } else {
+        const open = L.BOOKS.filter(b => st.claimed[b] == null);
+        body = `<p class="hint">${disabled ? `Waiting for ${NAMES[st.turn]}…` : `Call a book when your team holds all six of its cards${L.namingRequired(st) ? ', then say who holds each one' : ''}. You can also pick a book on the shelf.`}</p>
+          <div class="call-grid">${open.map(b => `<button class="btn" data-callbook="${b}" aria-pressed="${ui.callBook === b}" ${disabled ? 'disabled' : ''}>${L.bookName(b)}</button>`).join('')}</div>
+          ${ui.callBook && !disabled ? callConfirm() : ''}`;
+      }
+      panel = `<div class="panel">${coachPanelHtml()}${tabs}${body}${ui.error ? `<p class="error">${esc(ui.error)}</p>` : ''}</div>`;
+    }
+    el.innerHTML = `
+      <div class="you-head">
+        <span class="seat-name">Your hand</span>
+        <span class="chip us">${esc(TEAM_NAME[0])}</span>
+        ${n === 0 ? '<span class="chip out">Out</span>' : `<span class="seat-meta">${n} card${n === 1 ? '' : 's'}</span>`}
+        <span style="margin-left: auto">${sendStatusHtml()}</span>
+      </div>
+      ${hand}${panel}`;
+  }
+
+  function callConfirm() {
+    const b = ui.callBook;
+    const naming = L.namingRequired(st);
+    let rows = '', ready = true;
+    if (naming) {
+      const mates = L.teammatesOf(st, 0);
+      rows = '<div class="name-rows">' + L.BOOK_CARDS[b].map(c => {
+        if (st.players[0].hand.includes(c)) return `<div class="name-row">${cref(c)}<span class="hint">You hold it</span></div>`;
+        if (ui.assign[c] == null) ready = false;
+        return `<div class="name-row">${cref(c)}${mates.map(m => {
+          const out = !st.players[m].hand.length;
+          return `<button class="btn" data-assign="${c}:${m}" aria-pressed="${ui.assign[c] === m}" ${out ? 'disabled title="Out of cards"' : ''}>${esc(NAMES[m])}${out ? ' (out)' : ''}</button>`;
+        }).join('')}</div>`;
+      }).join('') + '</div>';
+    }
+    const risk = naming
+      ? `If ${esc(TEAM_NAME[1])} hold any of its cards, or you name the wrong teammate for any card, the book goes to them.`
+      : `If ${esc(TEAM_NAME[1])} hold any of its six cards, the book goes to them.`;
+    return `<div class="confirm">
+      <p>Call <b>${L.bookName(b)}</b> for your team? ${risk}</p>
+      ${rows}
+      <div class="ask-bar"><button class="btn primary" id="confirmCall" ${ready ? '' : 'disabled'}>${ready ? 'Call ' + L.bookName(b) : 'Name every card first'}</button><button class="btn" id="cancelCall">Cancel</button></div>
+    </div>`;
+  }
+
+  function pickCallBook(b) {
+    ui.tab = 'call';
+    ui.callBook = b;
+    ui.assign = {};
+    const live = L.teammatesOf(st, 0).filter(m => st.players[m].hand.length);
+    L.BOOK_CARDS[b].forEach(c => {
+      if (st.players[0].hand.includes(c)) ui.assign[c] = 0;
+      else if (live.length === 1) ui.assign[c] = live[0];
+    });
+  }
+
+  // Short tag for each player in the notes: initials of multi-word names (OL, TR), else the shortest unique start.
+  function initial(s) {
+    if (s === 0) return 'You';
+    const acro = nm => nm.split(' ').map(w => w[0]).join('').toUpperCase();
+    const a = acro(NAMES[s]);
+    if (NAMES[s].includes(' ') && NAMES.every((nm, i) => i === s || acro(nm) !== a)) return a;
+    for (let k = 1; k <= NAMES[s].length; k++) {
+      const pre = NAMES[s].slice(0, k).toLowerCase();
+      if (NAMES.every((nm, i) => i === s || !nm.toLowerCase().startsWith(pre))) return NAMES[s].slice(0, k);
+    }
+    return NAMES[s];
+  }
+  // One cell per card: who holds it if that's certain; otherwise the two candidates, or "?" with a team
+  // colour when every candidate is on one team. Hovering shows everyone who could hold it.
+  function notesHtml() {
+    const poss = L.possibleHolders(st, 0, true);
+    return L.BOOKS.filter(b => st.claimed[b] == null).map(b => `
+      <div class="note-row"><div class="group-label">${L.bookName(b)}</div><div class="note-cells">
+      ${L.BOOK_CARDS[b].map(c => {
+        const p = poss[c];
+        const teams = new Set(p.map(L.teamOf));
+        const team = teams.size === 1 ? (teams.has(0) ? ' us' : ' them') : '';
+        const who = p.length === 1 ? initial(p[0]) : p.length === 2 ? p.map(initial).join('/') : '?';
+        const title = p.length === 1 ? `${NAMES[p[0]]} holds it` : 'Could be: ' + p.map(x => NAMES[x]).join(', ');
+        return `<div class="cell${team}" title="${esc(title)}"><span class="c${L.isRed(c) ? ' red' : ''}">${c[0] === 'X' ? (c === 'X1' ? 'J●' : 'J○') : L.cardRank(c) + L.cardSuit(c)}</span><span class="w">${who}</span></div>`;
+      }).join('')}</div></div>`).join('') || '<p class="hint">Every book has been called.</p>';
+  }
+
+  function renderSide() {
+    $('score').innerHTML = `
+      <div class="us"><div class="num">${st.score[0]}</div><div class="team">${TEAM_NAME[0]}</div></div>
+      <div class="to">first<br>to 5</div>
+      <div class="them" style="text-align:right"><div class="num">${st.score[1]}</div><div class="team them">${TEAM_NAME[1]}</div></div>`;
+    const pickable = myTurn() && ui.tab === 'call' && st.players[0].hand.length > 0;
+    $('shelf').innerHTML = L.BOOKS.map(b => {
+      const t = st.claimed[b];
+      const cls = t == null ? (pickable ? ' pickable' : '') : (t === 0 ? ' us' : ' them');
+      const label = L.bookName(b).replace('Eights & Jokers', '8s & Jokers');
+      const tag = t == null ? 'open' : 'won by ' + TEAM_NAME[t];
+      return t == null && pickable
+        ? `<button class="spine${cls}" data-spine="${b}" data-callbook="${b}" aria-pressed="${ui.callBook === b}" title="Call ${L.bookName(b)}"><span>${label}</span></button>`
+        : `<div class="spine${cls}" data-spine="${b}" title="${L.bookName(b)}: ${tag}"><span>${label}</span></div>`;
+    }).join('');
+
+    $('talkBox').hidden = !settings.talk;
+    $('notesBox').hidden = !settings.notes;
+    if (settings.notes) $('notes').innerHTML = notesHtml();
+
+    $('log').innerHTML = [...st.log].reverse().map(ev => {
+      let cls = '';
+      if (ev.type === 'ask' && ev.hit) cls = 'hit';
+      if (ev.type === 'call' || ev.type === 'sweep' || ev.type === 'end') cls = (ev.team ?? ev.winner) === 0 ? 'call-us' : 'call-them';
+      return `<li class="${cls}"><span class="n">${ev.seq}</span>${describe(ev)}</li>`;
+    }).join('') || '<li>No moves yet.</li>';
+  }
+
+  function renderOverlay() {
+    $('overlay').hidden = !st.over;
+    if (st.over) {
+      const won = st.winner === 0;
+      $('overTitle').textContent = `${TEAM_NAME[st.winner]} win`;
+      $('overText').textContent = `Final shelf: ${st.score[st.winner]} books to ${st.score[1 - st.winner]}.`;
+      $('overReview').innerHTML = !reviewDb || !st.initial ? '' : ui.sendState === 'sent' && ui.sentSeq === st.seq
+        ? 'Saved. Tell Claude in the chat and it will go through your moves.' : sendStatusHtml();
+    }
+  }
+
+  const narrow = window.matchMedia('(max-width: 699px)');
+  narrow.addEventListener?.('change', () => st && render());
+  function render() {
+    soundFor();
+    if (ui.tab === 'notes' && (!settings.notes || !narrow.matches)) ui.tab = 'ask';
+    if (ui.card && !L.askableBooks(st, 0).includes(L.bookOf(ui.card))) ui.card = null;
+    if (ui.callBook && st.claimed[ui.callBook] != null) ui.callBook = null;
+    for (let s = 1; s < st.players.length; s++) renderSeat(s);
+    const changed = String(st.players.length) !== settings.players || st.rules.bluffing !== (settings.bluffing !== 'off') ||
+      st.rules.strict !== (settings.strict !== 'off') || (st.players.length === 6 && st.rules.naming !== (settings.naming !== 'off'));
+    $('pending').hidden = !changed || st.over;
+    $('namingField').hidden = settings.players !== '6';
+    renderCenter();
+    renderYou();
+    renderSide();
+    renderOverlay();
+    renderGive();
+    renderCoachBox();
+    document.querySelectorAll('.group.open').forEach(g => placePop(g));
+    saveGame();
+    coachTick();
+  }
+
+  // ---------- saving a game in progress ----------
+  const GAME_KEY = 'literature-game-v3';
+  // The previous save is kept as a backup, so a bad latest save costs one move instead of the whole game.
+  function saveGame() {
+    try {
+      const prev = localStorage.getItem(GAME_KEY);
+      if (prev) localStorage.setItem(GAME_KEY + '-prev', prev);
+      localStorage.setItem(GAME_KEY, JSON.stringify({ st, ui }));
+    } catch (e) {}
+  }
+  function loadGame() {
+    const read = k => { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch (e) { return null; } };
+    const cur = read(GAME_KEY);
+    if (validSaved(cur)) return cur;
+    const prev = read(GAME_KEY + '-prev');
+    if (validSaved(prev)) { prev.ui = null; return prev; }
+    return null;
+  }
+  // Only resume a saved game that is complete and consistent; anything else starts a new deal.
+  function validSaved(d) {
+    try {
+      const g = d && d.st;
+      if (!g || !Array.isArray(g.players) || ![4, 6].includes(g.players.length)) return false;
+      if (!g.rules || g.rules.players !== g.players.length || !g.pub || !Array.isArray(g.log)) return false;
+      if (!Number.isInteger(g.turn) || g.turn < 0 || g.turn >= g.players.length) return false;
+      if (!Array.isArray(g.score) || g.score.length !== 2) return false;
+      const seen = new Set();
+      for (const p of g.players) {
+        if (!Array.isArray(p.hand)) return false;
+        for (const c of p.hand) {
+          if (!L.ALL.includes(c) || seen.has(c) || g.claimed[L.bookOf(c)] != null) return false;
+          seen.add(c);
+        }
+      }
+      const open = L.BOOKS.filter(b => g.claimed[b] == null).length;
+      if (!g.over && seen.size !== open * 6) return false;
+      if (!g.over && !g.players[g.turn].hand.length) return false;
+      return true;
+    } catch (e) { return false; }
+  }
+
+  // ---------- events ----------
+  document.addEventListener('click', e => {
+    const t = e.target.closest('button, .seat');
+    if (!st) return;
+    if (!t) {
+      const g = e.target.closest('.group.has-pop');
+      if (g && !e.target.closest('.pop')) { const b = g.querySelector('[data-openbook]')?.dataset.openbook; if (b) { ui.openBook = ui.openBook === b ? null : b; render(); } }
+      else if (ui.openBook && !e.target.closest('.pop')) { ui.openBook = null; render(); }
+      return;
+    }
+    if (t.dataset.closepop) { ui.openBook = null; render(); return; }
+    if (t.dataset.tab) { ui.tab = t.dataset.tab; ui.error = null; ui.callBook = null; render(); return; }
+    if (t.dataset.card) { ui.card = ui.card === t.dataset.card ? null : t.dataset.card; ui.error = null; render(); return; }
+    if (t.dataset.ask) { humanAsk(Number(t.dataset.ask)); return; }
+    if (t.dataset.callbook) { pickCallBook(t.dataset.callbook); render(); return; }
+    if (t.dataset.assign) { const [c, m] = t.dataset.assign.split(':'); ui.assign[c] = Number(m); render(); return; }
+    if (t.id === 'confirmCall') { humanCall(); return; }
+    if (t.dataset.quickcall) { quickCall(t.dataset.quickcall); return; }
+    if (t.dataset.openbook) { ui.openBook = ui.openBook === t.dataset.openbook ? null : t.dataset.openbook; render(); return; }
+    if (t.id === 'sendBtn') { sendGame(); return; }
+    if (t.id === 'hintBtn') { coach.showHint = true; render(); return; }
+    if (t.id === 'cancelCall') { ui.callBook = null; render(); return; }
+    if (t.classList.contains('seat') && t.classList.contains('target')) { humanAsk(Number(t.dataset.seat)); return; }
+  });
+  document.addEventListener('keydown', e => {
+    const t = e.target;
+    if ((e.key === 'Enter' || e.key === ' ') && t.classList && t.classList.contains('target')) { e.preventDefault(); humanAsk(Number(t.dataset.seat)); }
+  });
+
+  $('level').value = settings.level;
+  $('speed').value = settings.speed;
+  const applyFont = () => { if (settings.font === 'default') delete document.documentElement.dataset.font; else document.documentElement.dataset.font = settings.font; };
+  settings.font = ['default', 'ms', 'jpm', 'gs', 'arc'].includes(settings.font) ? settings.font : 'arc';
+  $('font').value = settings.font;
+  applyFont();
+  $('font').addEventListener('change', e => { settings.font = e.target.value; saveSettings(); applyFont(); });
+  $('bluffing').value = settings.bluffing;
+  $('bluffing').addEventListener('change', e => { settings.bluffing = e.target.value; saveSettings(); render(); });
+  $('teammate').value = settings.teammate;
+  $('teammate').addEventListener('change', e => { settings.teammate = e.target.value; saveSettings(); });
+  $('players').value = settings.players;
+  $('naming').value = settings.naming;
+  $('strict').value = settings.strict;
+  $('players').addEventListener('change', e => { settings.players = e.target.value; saveSettings(); render(); });
+  $('naming').addEventListener('change', e => { settings.naming = e.target.value; saveSettings(); render(); });
+  $('strict').addEventListener('change', e => { settings.strict = e.target.value; saveSettings(); render(); });
+  $('notesBtn').setAttribute('aria-pressed', settings.notes);
+  $('talkBtn').setAttribute('aria-pressed', settings.talk);
+  $('soundBtn').setAttribute('aria-pressed', settings.sound);
+  $('coachBtn').setAttribute('aria-pressed', settings.coach);
+  $('coachBtn').addEventListener('click', () => {
+    settings.coach = !settings.coach; saveSettings();
+    $('coachBtn').setAttribute('aria-pressed', settings.coach);
+    render();
+  });
+  $('voicesBtn').setAttribute('aria-pressed', settings.voices);
+  $('voicesBtn').addEventListener('click', () => {
+    settings.voices = !settings.voices; saveSettings();
+    $('voicesBtn').setAttribute('aria-pressed', settings.voices);
+    if (!settings.voices) Voice.stop();
+    else if (st) { Voice.preload(st.players.map((_, i) => i).filter(i => i > 0)); Voice.test(); }
+  });
+  $('soundBtn').addEventListener('click', () => {
+    settings.sound = !settings.sound; saveSettings();
+    $('soundBtn').setAttribute('aria-pressed', settings.sound);
+    if (settings.sound) { Sfx.unlock(); Sfx.play('turn'); }
+  });
+  $('talkBtn').addEventListener('click', () => {
+    settings.talk = !settings.talk; saveSettings();
+    $('talkBtn').setAttribute('aria-pressed', settings.talk);
+    render();
+  });
+  $('level').addEventListener('change', e => { settings.level = e.target.value; saveSettings(); schedule(); });
+  $('speed').addEventListener('change', e => { settings.speed = e.target.value; saveSettings(); schedule(); });
+  $('notesBtn').addEventListener('click', () => {
+    settings.notes = !settings.notes; saveSettings();
+    $('notesBtn').setAttribute('aria-pressed', settings.notes);
+    render();
+  });
+  function renderNamesForm() {
+    const n = st.players.length;
+    const list = savedNames(n);
+    $('namesGrid').innerHTML = SEAT_LABELS[n].map((lab, i) => `
+      <div class="field"><label for="name${i}">${lab}</label>
+      <input id="name${i}" maxlength="14" autocomplete="off" value="${esc(list[i])}"></div>`).join('');
+    $('namesNote').textContent = `These names are for ${n} player games. Start a ${n === 4 ? '6' : '4'} player game to set names for that one.`;
+    $('namesError').textContent = '';
+  }
+  function applyNames(list) {
+    settings[namesKey(st.players.length)] = list;
+    saveSettings();
+    setMode(st.players.length);
+    buildTable();
+    render();
+  }
+  function placePop(g) {
+    const pop = g.querySelector('.pop');
+    if (!pop) return;
+    pop.style.left = ''; pop.style.right = '';
+    if (getComputedStyle(pop).position === 'fixed') return;
+    const r = pop.getBoundingClientRect();
+    if (r.width && r.right > window.innerWidth - 8) { pop.style.left = 'auto'; pop.style.right = '0'; }
+  }
+  document.addEventListener('mouseover', e => { const g = e.target.closest && e.target.closest('.group.has-pop'); if (g) placePop(g); });
+  document.addEventListener('focusin', e => { const g = e.target.closest && e.target.closest('.group.has-pop'); if (g) placePop(g); });
+  $('namesBtn').addEventListener('click', () => {
+    const open = $('namesBox').hidden;
+    $('namesBox').hidden = !open;
+    $('namesBtn').setAttribute('aria-pressed', open);
+    if (open) renderNamesForm();
+    render();
+    schedule();
+  });
+  $('namesSave').addEventListener('click', () => {
+    const n = st.players.length;
+    const list = SEAT_LABELS[n].map((_, i) => cleanName($('name' + i).value) || DEFAULT_NAMES[n][i]);
+    const lower = list.map(x => x.toLowerCase());
+    const dup = lower.find((x, i) => lower.indexOf(x) !== i);
+    if (dup) { $('namesError').textContent = `Two players can't both be called "${list[lower.indexOf(dup)]}".`; return; }
+    if (lower.slice(1).includes('you')) { $('namesError').textContent = '"You" is kept for you. Pick another name.'; return; }
+    applyNames(list);
+    renderNamesForm();
+    $('namesError').textContent = 'Saved.';
+  });
+  $('namesReset').addEventListener('click', () => { applyNames(DEFAULT_NAMES[st.players.length].slice()); renderNamesForm(); });
+
+  $('newBtn').addEventListener('click', newGame);
+  $('againBtn').addEventListener('click', newGame);
+
+  // Keep a game in progress across page updates.
+  function start(data) {
+    heardSeq = Infinity;
+    if (!validSaved(data)) data = loadGame();
+    if (validSaved(data)) {
+      st = data.st;
+      animSeq = st.seq;
+      Voice.preload(st.players.map((_, i) => i).filter(i => i > 0));
+      setMode(st.players.length);
+      buildTable();
+      ui = Object.assign({ tab: 'ask', card: null, callBook: null, error: null, shownSeq: 0, give: null, assign: {} }, data.ui || {});
+      if (!['ask', 'call', 'notes'].includes(ui.tab)) ui.tab = 'ask';
+      if (!ui.assign || typeof ui.assign !== 'object') ui.assign = {};
+      // A pending hand-over only survives if it still makes sense.
+      if (ui.give && !(st.turn === ui.give.from && st.players[0].hand.includes(ui.give.card) && !st.over)) ui.give = null;
+      render(); schedule();
+    }
+    else newGame();
+  }
+  try { window.claude?.hot?.snapshot?.(() => ({ st, ui })); } catch (e) {}
+  if (window.claude?.hot?.ready) window.claude.hot.ready(start);
+  else start(window.claude?.hot?.data ?? {});
+})();
+</script>
+<script>
+if ('serviceWorker' in navigator) addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+</script>
+</body></html>
