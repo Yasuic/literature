@@ -57,6 +57,13 @@ try:
     tap(deal)
     wait_for('Your hand')
     screenshot('android-table.png')
+    tree = ui()
+    settings = next(n for n in tree.iter() if n.get('text', '').strip() == 'Settings' or n.get('content-desc', '').strip() == 'Settings')
+    tap(settings)
+    tree = wait_for('Bot speed')
+    screenshot('android-settings.png')
+    settings = next(n for n in tree.iter() if n.get('text', '').strip() == 'Settings' or n.get('content-desc', '').strip() == 'Settings')
+    tap(settings)
     # Only the test app on this disposable cloud emulator is stopped.
     adb('shell', 'am', 'force-stop', PACKAGE)
     launch()

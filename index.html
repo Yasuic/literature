@@ -382,6 +382,32 @@
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
   }
+  .mobile-settings { display: none; }
+  @media (max-width: 699px) {
+    .android-app .app { padding: 12px 10px 24px; }
+    .android-app .top { align-items: center; gap: 10px; margin-bottom: 12px; }
+    .android-app .brand { flex: 1; }
+    .android-app .brand h1 { font-size: 1.25rem; }
+    .android-app .brand p, .android-app .top .controls { display: none; }
+    .android-app .mobile-settings { display: inline-flex; font-size: .82rem; }
+    .android-app.settings-open .brand p { display: block; }
+    .android-app.settings-open .top .controls { display: flex; flex-basis: 100%; }
+    .android-app .table-wrap { display: flex; flex-direction: column; gap: 12px; }
+    .android-app #table { order: 0; }
+    .android-app #talkBox { order: 1; margin: 0; }
+    .android-app .table.p4 { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-areas: "s1 s2 s3" "center center center" "you you you"; }
+    .android-app .table { padding: 10px; gap: 8px; --cw: 40px; }
+    .android-app .table .seat { padding: 6px 3px; gap: 4px; }
+    .android-app .table .seat-name { font-size: .75rem; }
+    .android-app .table .seat-meta { font-size: .66rem; }
+    .android-app .table .chip { font-size: .52rem; padding: 2px 4px; }
+    .android-app .table .fan { height: 24px; padding-left: 14px; }
+    .android-app .table .fan .back { height: 22px; width: 16px; margin-left: -14px; border-width: 1px; }
+    .android-app .center { padding: 7px 2px; gap: 4px; }
+    .android-app .event { font-size: .8rem; }
+    .android-app .you { padding-top: 10px; gap: 10px; }
+    .android-app .hand { gap: 8px 12px; }
+  }
 </style>
 
 <div class="app">
@@ -390,7 +416,8 @@
       <h1>Literature</h1>
       <p id="blurb"></p>
     </div>
-    <div class="controls">
+    <button class="btn mobile-settings" id="settingsBtn" aria-expanded="false" aria-controls="settingsControls">Settings</button>
+    <div class="controls" id="settingsControls">
       <div class="field">
         <label for="level">Bots</label>
         <select id="level">
@@ -549,6 +576,7 @@
 (function () {
   'use strict';
   const L = window.Lit;
+  if (window.Capacitor?.getPlatform?.() === 'android') document.documentElement.classList.add('android-app');
   // Seat order is clockwise from you. Seats 4 and 5 are only used in a 6 player game.
   // Default names say where each player sits: L = left, F = front, R = right.
   const DEFAULT_NAMES = {
@@ -1370,7 +1398,7 @@
     clearTimeout(timer);
     const g = ++gen;
     // Bots wait while the names panel is open, so nothing pops up mid-typing.
-    if (!st || st.over || ui.give || !$('namesBox').hidden || !$('namePrompt').hidden || st.players[st.turn].isHuman) return;
+    if (!st || st.over || ui.give || !$('namesBox').hidden || !$('namePrompt').hidden || document.documentElement.classList.contains('settings-open') || st.players[st.turn].isHuman) return;
     const seat = st.turn;
     const started = Date.now();
     const delay = SPEED_MS[settings.speed] || 850;
@@ -1960,6 +1988,12 @@
 
   $('newBtn').addEventListener('click', newGame);
   $('againBtn').addEventListener('click', newGame);
+  $('settingsBtn').addEventListener('click', () => {
+    const open = document.documentElement.classList.toggle('settings-open');
+    $('settingsBtn').setAttribute('aria-expanded', String(open));
+    if (open) { clearTimeout(timer); gen++; }
+    else schedule();
+  });
 
   // Keep a game in progress across page updates.
   function start(data) {
