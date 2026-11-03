@@ -1,5 +1,6 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="en"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Literature</title>
+<meta name="description" content="A team card game of asking, bluffing and calling books. Play against bots with a coach, deduction notes and recorded voices.">
 <link rel="stylesheet" href="fonts/fonts.css">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#04060d">
@@ -512,6 +513,7 @@
       </section>
 </aside>
   </main>
+  <footer style="padding:14px 20px 24px;text-align:center;font-size:12px;color:var(--muted)"><a href="privacy.html" style="color:inherit">Privacy</a> &middot; <a href="licenses.html" style="color:inherit">Open source licenses</a> &middot; <a href="https://github.com/Yasuic/literature/issues" style="color:inherit">Support</a></footer>
 </div>
 
 <div class="fly-layer" id="flyLayer" aria-hidden="true"></div>
@@ -550,7 +552,7 @@
   // Seat order is clockwise from you. Seats 4 and 5 are only used in a 6 player game.
   // Default names say where each player sits: L = left, F = front, R = right.
   const DEFAULT_NAMES = {
-    4: ['You', 'NEGA LEFT', 'NEGA TEAMMATE', 'NEGA RIGHT'],
+    4: ['You', 'Opponent L', 'Teammate', 'Opponent R'],
     6: ['You', 'Opponent L', 'Teammate L', 'Opponent F', 'Teammate R', 'Opponent R'],
   };
   const SEAT_LABELS = {
@@ -559,7 +561,7 @@
   };
   const namesKey = n => 'names' + n;
   // Earlier default names count as "not chosen", so they switch to the current defaults.
-  const OLD_DEFAULTS = { 4: [[], ['Opponent L', 'Basil'], ['Teammate', 'June'], ['Opponent R', 'Otto']], 6: [] };
+  const OLD_DEFAULTS = { 4: [[], ['Opponent L', 'Basil', 'NEGA LEFT'], ['Teammate', 'June', 'NEGA TEAMMATE'], ['Opponent R', 'Otto', 'NEGA RIGHT']], 6: [] };
   const savedNames = n => DEFAULT_NAMES[n].map((d, i) => {
     const v = cleanName((settings[namesKey(n)] || [])[i]);
     return v && !((OLD_DEFAULTS[n][i] || []).includes(v)) ? v : d;
@@ -1272,11 +1274,7 @@
     schedule();
   });
 
-  // ---------- sending games to Claude for review ----------
-  // Each finished game is saved to this page's database, with the starting deal and every move, so Claude can
-  // replay it and point out mistakes. The "Send to Claude" button saves a game in progress the same way.
-  let reviewDb = null;
-  try { window.claude?.use?.('db')?.then(d => { reviewDb = d; if (st) render(); }, () => {}); } catch (e) {}
+  // Export stays on this device until the player chooses to share the file.
   const plain = h => String(h).replace(/<[^>]*>/g, '');
   function gameRecord() {
     return {
@@ -1296,26 +1294,21 @@
       })),
     };
   }
-  async function sendGame() {
-    if (!reviewDb || !st || !st.initial || ui.sendState === 'sending') return;
-    ui.sendState = 'sending';
-    render();
-    try {
-      await reviewDb.doc('games/' + st.gameId).set(gameRecord());
-      ui.sendState = 'sent';
-      ui.sentSeq = st.seq;
-    } catch (e) {
-      console.error(e);
-      ui.sendState = 'failed';
-    }
-    render();
+  function sendGame() {
+    if (!st || !st.initial) return;
+    const record = { format: 'literature-review-v1', ...gameRecord() };
+    const url = URL.createObjectURL(new Blob([JSON.stringify(record, null, 2)], { type: 'application/json' }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'literature-game-' + st.gameId + '.json';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 10000);
   }
   function sendStatusHtml() {
-    if (!reviewDb || !st.initial) return '';
-    if (ui.sendState === 'sending') return '<span class="seat-meta">Saving for Claude…</span>';
-    if (ui.sendState === 'failed') return '<button class="btn" id="sendBtn">Saving failed: try again</button>';
-    if (ui.sendState === 'sent' && ui.sentSeq === st.seq) return '<span class="seat-meta">Saved for Claude to review</span>';
-    return `<button class="btn" id="sendBtn" title="Save this game so Claude can review your moves">${st.over ? 'Send game to Claude' : 'Send game so far to Claude'}</button>`;
+    if (!st.initial || window.Capacitor) return '';
+    return '<button class="btn" data-export-game title="Download this deal and its moves, then attach the file in ChatGPT for a review">Export game for ChatGPT</button>';
   }
 
   // Every move goes through here: save, act it out on the table, then show the new position and carry on.
@@ -1326,7 +1319,6 @@
     animating = false;
     render();
     schedule();
-    if (st.over && ui.sentSeq !== st.seq) sendGame();
   }
 
   function newGame() {
@@ -1772,8 +1764,7 @@
       const won = st.winner === 0;
       $('overTitle').textContent = `${TEAM_NAME[st.winner]} win`;
       $('overText').textContent = `Final shelf: ${st.score[st.winner]} books to ${st.score[1 - st.winner]}.`;
-      $('overReview').innerHTML = !reviewDb || !st.initial ? '' : ui.sendState === 'sent' && ui.sentSeq === st.seq
-        ? 'Saved. Tell Claude in the chat and it will go through your moves.' : sendStatusHtml();
+      $('overReview').innerHTML = sendStatusHtml();
     }
   }
 
@@ -1860,7 +1851,7 @@
     if (t.id === 'confirmCall') { humanCall(); return; }
     if (t.dataset.quickcall) { quickCall(t.dataset.quickcall); return; }
     if (t.dataset.openbook) { ui.openBook = ui.openBook === t.dataset.openbook ? null : t.dataset.openbook; render(); return; }
-    if (t.id === 'sendBtn') { sendGame(); return; }
+    if (t.hasAttribute('data-export-game')) { sendGame(); return; }
     if (t.id === 'hintBtn') { coach.showHint = true; render(); return; }
     if (t.id === 'cancelCall') { ui.callBook = null; render(); return; }
     if (t.classList.contains('seat') && t.classList.contains('target')) { humanAsk(Number(t.dataset.seat)); return; }
@@ -1990,9 +1981,7 @@
     }
     else newGame();
   }
-  try { window.claude?.hot?.snapshot?.(() => ({ st, ui, coachLog: coach.verdicts.filter(v => v.status === 'done') })); } catch (e) {}
-  if (window.claude?.hot?.ready) window.claude.hot.ready(start);
-  else start(window.claude?.hot?.data ?? {});
+  start({});
 })();
 </script>
 

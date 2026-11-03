@@ -1,8 +1,8 @@
 // Offline cache. The game runs from this cache, and fetches fresh files in the background when online,
 // so a new version shows up the next time the app opens. Change VERSION on every release.
-const VERSION = 'literature-v4';
+const VERSION = 'literature-chatgpt-v2';
 const FILES = [
-  './', 'index.html', 'engine.js', 'search-worker.js', 'manifest.webmanifest', 'privacy.html', 'favicon.ico',
+  './', 'index.html', 'engine.js', 'search-worker.js', 'manifest.webmanifest', 'privacy.html', 'licenses.html', 'favicon.ico',
   'fonts/fonts.css',
   'fonts/orbitron-400-latin.woff2',
   'fonts/exo2-400-latin.woff2',

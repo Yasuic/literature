@@ -14,6 +14,9 @@ name: Build iPhone app
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: macos-15
@@ -24,11 +27,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Select Xcode 26.3
+        run: |
+          sudo xcode-select -s /Applications/Xcode_26.3.app/Contents/Developer
+          xcodebuild -version
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
           cache-dependency-path: ios-app/package-lock.json
+
+      - name: Check the rules and copy the current game
+        working-directory: .
+        run: |
+          node --test tests/engine.test.cjs
+          node scripts/build-web.mjs
 
       - name: Install Capacitor and copy the game into the iOS project
         run: |

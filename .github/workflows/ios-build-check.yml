@@ -1,0 +1,79 @@
+name: Check game and iPhone build
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select Xcode 26.3
+        run: |
+          sudo xcode-select -s /Applications/Xcode_26.3.app/Contents/Developer
+          xcodebuild -version
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: ios-app/package-lock.json
+      - name: Test rules and prepare both versions
+        run: |
+          node --test tests/engine.test.cjs
+          node scripts/build-web.mjs
+      - name: Install and sync Capacitor
+        working-directory: ios-app
+        run: |
+          npm ci
+          npx cap sync ios
+      - name: Build for the iPhone simulator without signing
+        working-directory: ios-app
+        run: |
+          xcodebuild build \
+            -project ios/App/App.xcodeproj \
+            -scheme App \
+            -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath "$RUNNER_TEMP/LiteratureBuild" \
+            CODE_SIGNING_ALLOWED=NO
+      - name: Prepare native UI tests
+        run: ruby scripts/prepare-ui-tests.rb
+      - name: Create an iPhone simulator
+        run: |
+          RUNTIME_ID=$(xcrun simctl list runtimes -j | python3 -c 'import json,sys; print(next(r["identifier"] for r in json.load(sys.stdin)["runtimes"] if r["isAvailable"] and "iOS-26" in r["identifier"]))')
+          DEVICE_ID=$(xcrun simctl create "Literature UI" com.apple.CoreSimulator.SimDeviceType.iPhone-16-Pro-Max "$RUNTIME_ID")
+          echo "LITERATURE_SIMULATOR=$DEVICE_ID" >> "$GITHUB_ENV"
+          xcrun simctl boot "$DEVICE_ID"
+          xcrun simctl bootstatus "$DEVICE_ID" -b
+          xcrun simctl status_bar "$DEVICE_ID" override --time 9:41 --batteryState charged --batteryLevel 100
+      - name: Play and resume the native app
+        working-directory: ios-app
+        run: |
+          xcodebuild test \
+            -project ios/App/App.xcodeproj \
+            -scheme App \
+            -configuration Debug \
+            -destination "platform=iOS Simulator,id=$LITERATURE_SIMULATOR" \
+            -parallel-testing-enabled NO \
+            -derivedDataPath "$RUNNER_TEMP/LiteratureBuild" \
+            -resultBundlePath "$RUNNER_TEMP/LiteratureUI.xcresult" \
+            CODE_SIGNING_ALLOWED=NO
+      - name: Export iPhone screenshots
+        if: always()
+        run: |
+          if [ -d "$RUNNER_TEMP/LiteratureUI.xcresult" ]; then
+            xcrun xcresulttool export attachments --path "$RUNNER_TEMP/LiteratureUI.xcresult" --output-path "$RUNNER_TEMP/LiteratureScreenshots"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: iphone-ui-test-results
+          path: |
+            ${{ runner.temp }}/LiteratureUI.xcresult
+            ${{ runner.temp }}/LiteratureScreenshots
+          retention-days: 14
