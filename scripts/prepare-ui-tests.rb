@@ -12,6 +12,7 @@ unless target
   target.source_build_phase.add_file_reference(group.new_file('GameTests.swift'))
   target.add_dependency(app)
   target.build_configurations.each do |config|
+    config.build_settings['PRODUCT_NAME'] = '$(TARGET_NAME)'
     config.build_settings['PRODUCT_BUNDLE_IDENTIFIER'] = 'io.github.yasuic.literature.uitests'
     config.build_settings['TEST_TARGET_NAME'] = 'App'
     config.build_settings['GENERATE_INFOPLIST_FILE'] = 'YES'
