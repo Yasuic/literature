@@ -513,6 +513,7 @@
       </section>
 </aside>
   </main>
+  <footer style="padding:14px 20px 24px;text-align:center;font-size:12px;color:var(--muted)"><a href="privacy.html" style="color:inherit">Privacy</a> &middot; <a href="licenses.html" style="color:inherit">Open source licenses</a> &middot; <a href="https://github.com/Yasuic/literature/issues" style="color:inherit">Support</a></footer>
 </div>
 
 <div class="fly-layer" id="flyLayer" aria-hidden="true"></div>
@@ -551,7 +552,7 @@
   // Seat order is clockwise from you. Seats 4 and 5 are only used in a 6 player game.
   // Default names say where each player sits: L = left, F = front, R = right.
   const DEFAULT_NAMES = {
-    4: ['You', 'NEGA LEFT', 'NEGA TEAMMATE', 'NEGA RIGHT'],
+    4: ['You', 'Opponent L', 'Teammate', 'Opponent R'],
     6: ['You', 'Opponent L', 'Teammate L', 'Opponent F', 'Teammate R', 'Opponent R'],
   };
   const SEAT_LABELS = {
@@ -560,7 +561,7 @@
   };
   const namesKey = n => 'names' + n;
   // Earlier default names count as "not chosen", so they switch to the current defaults.
-  const OLD_DEFAULTS = { 4: [[], ['Opponent L', 'Basil'], ['Teammate', 'June'], ['Opponent R', 'Otto']], 6: [] };
+  const OLD_DEFAULTS = { 4: [[], ['Opponent L', 'Basil', 'NEGA LEFT'], ['Teammate', 'June', 'NEGA TEAMMATE'], ['Opponent R', 'Otto', 'NEGA RIGHT']], 6: [] };
   const savedNames = n => DEFAULT_NAMES[n].map((d, i) => {
     const v = cleanName((settings[namesKey(n)] || [])[i]);
     return v && !((OLD_DEFAULTS[n][i] || []).includes(v)) ? v : d;

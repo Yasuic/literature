@@ -6,7 +6,7 @@ import vm from 'node:vm';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const files = [
   'index.html', 'engine.js', 'search-worker.js', 'sw.js', 'manifest.webmanifest',
-  'privacy.html', 'favicon.ico', 'fonts', 'icons', 'voices',
+  'privacy.html', 'licenses.html', 'licenses', 'favicon.ico', 'fonts', 'icons', 'voices',
 ];
 
 // Check both the rules and inline page scripts before copying a release.
