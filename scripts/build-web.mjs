@@ -20,7 +20,7 @@ for (const match of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
   new vm.Script(match[2], { filename: `index-inline-${++count}.js` });
 }
 JSON.parse(await readFile(path.join(root, 'manifest.webmanifest'), 'utf8'));
-for (const destination of ['dist', 'ios-app/www']) {
+for (const destination of ['dist', 'ios-app/www', 'android-app/www']) {
   const out = path.join(root, destination);
   await mkdir(out, { recursive: true });
   for (const file of files) {
@@ -30,4 +30,4 @@ for (const destination of ['dist', 'ios-app/www']) {
 // Capacitor's CLI expects www/ to exist before syncing the native project.
 const info = { source: 'https://github.com/Yasuic/literature', revision: '8074fb1af2a76841efcd0b315927eda5ff525630' };
 await writeFile(path.join(root, 'dist', 'source.json'), JSON.stringify(info, null, 2) + '\n');
-console.log(`Checked ${count} page scripts. Built dist/ and ios-app/www/ from the same game files.`);
+console.log(`Checked ${count} page scripts. Built the web, iPhone and Android bundles from the same game files.`);

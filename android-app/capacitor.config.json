@@ -1,0 +1,9 @@
+{
+  "appId": "io.github.yasuic.literature",
+  "appName": "Literature",
+  "webDir": "www",
+  "android": {
+    "backgroundColor": "#04060d",
+    "allowMixedContent": false
+  }
+}

@@ -1,0 +1,80 @@
+name: Build and test Android app
+
+on:
+  pull_request:
+    paths:
+      - 'android-app/**'
+      - 'scripts/**'
+      - 'index.html'
+      - 'engine.js'
+      - '.github/workflows/android-build.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: android-app/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Check rules and build shared game files
+        run: |
+          node --test tests/engine.test.cjs
+          node scripts/build-web.mjs
+      - name: Generate and configure the Android project
+        working-directory: android-app
+        env:
+          ANDROID_VERSION_CODE: ${{ github.run_number }}
+        run: |
+          npm ci
+          npx cap add android
+          node ../scripts/configure-android.mjs
+          npx cap sync android
+      - name: Build test APK and unsigned Play bundle
+        working-directory: android-app/android
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon assembleDebug bundleRelease
+      - name: Save Android build files
+        run: |
+          mkdir -p android-build-files
+          cp android-app/android/app/build/outputs/apk/debug/app-debug.apk android-build-files/Literature-test.apk
+          cp android-app/android/app/build/outputs/bundle/release/app-release.aab android-build-files/Literature-unsigned.aab
+      - uses: actions/upload-artifact@v4
+        with:
+          name: literature-android-build
+          path: android-build-files
+          retention-days: 30
+      - name: Enable hardware acceleration for the emulator
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Open, deal and resume on Android
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 36
+          target: google_apis
+          arch: x86_64
+          profile: pixel_7
+          disable-animations: true
+          script: |
+            adb install android-build-files/Literature-test.apk
+            python3 scripts/android-smoke.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: literature-android-test-results
+          path: android-test-results
+          retention-days: 30
