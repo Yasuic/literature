@@ -1,0 +1,10 @@
+{
+  "name": "literature",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Literature card game for the web and iPhone.",
+  "scripts": {
+    "test": "node --test tests/engine.test.cjs",
+    "build": "node scripts/build-web.mjs"
+  }
+}

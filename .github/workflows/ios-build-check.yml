@@ -1,0 +1,43 @@
+name: Check game and iPhone build
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select Xcode 26.3
+        run: |
+          sudo xcode-select -s /Applications/Xcode_26.3.app/Contents/Developer
+          xcodebuild -version
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: ios-app/package-lock.json
+      - name: Test rules and prepare both versions
+        run: |
+          node --test tests/engine.test.cjs
+          node scripts/build-web.mjs
+      - name: Install and sync Capacitor
+        working-directory: ios-app
+        run: |
+          npm ci
+          npx cap sync ios
+      - name: Build for the iPhone simulator without signing
+        working-directory: ios-app
+        run: |
+          xcodebuild build \
+            -project ios/App/App.xcodeproj \
+            -scheme App \
+            -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath "$RUNNER_TEMP/LiteratureBuild" \
+            CODE_SIGNING_ALLOWED=NO
